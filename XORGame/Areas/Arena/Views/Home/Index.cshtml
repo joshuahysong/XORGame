@@ -1,0 +1,23 @@
+﻿@model XORGame.Areas.Arena.Models.ArenaViewModel
+@using Newtonsoft.Json;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Areas/Arena/Content/Arena.css")
+
+@section scripts {
+    @Scripts.Render("~/Areas/Arena/Scripts/ArenaHelper.js")
+    <script type="text/javascript">
+        function setup() {
+            arenaHelper.init({
+                attackURL: '@Url.Action("PerformAction", "Home")',
+            });
+        }
+        jQuery(document).ready(setup);
+    </script>
+}
+
+<div id="board" class="panel panel-body">
+    @Html.Partial("_Board")
+</div>

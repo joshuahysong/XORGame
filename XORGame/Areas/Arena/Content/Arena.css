@@ -1,0 +1,81 @@
+﻿.character-box {
+    height: 120px;
+    width: 120px;
+    margin: 4px;
+}
+
+    .character-box label {
+        height: 60px;
+    }
+
+.progress {
+    position: relative;
+}
+
+    .progress span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: black;
+    }
+
+.team-separator {
+    height: 130px;
+}
+
+.flex-align-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertial-align-bottom {
+    display: flex;
+    align-items: flex-end;
+}
+
+.equal {
+    display: flex;
+}
+
+:focus {
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.character-box:hover {
+    background-color: #F7F9F9;
+}
+
+.selected-character {
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.hp-bar {
+    margin-bottom: 2px;
+}
+
+.speed-bar {
+    height: 5px;
+}
+
+.combat-log-entry {
+    color: red;
+}
+
+.board-space {
+    height: 130px;
+    width: 130px;
+    min-height: 130px;
+    min-width: 130px;
+    margin: 0px;
+    padding: 0px;
+    border: 1px dotted lightgray;
+}
+
+.ability-panel {
+    height: 650px;
+}
+
+.dead-character {
+    color: lightgray
+}

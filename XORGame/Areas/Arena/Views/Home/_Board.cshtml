@@ -1,0 +1,114 @@
+﻿@model XORGame.Areas.Arena.Models.ArenaViewModel
+@{ 
+    var selectedCharacter = Model.Characters.Where(c => c.IsSelected).FirstOrDefault();
+}
+
+<div class ="row equal">
+    <div class="col-md-8">
+        <div class="row flex-align-center">
+            @for (var i = 5; i < 10; i++)
+            {
+                if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
+                {
+                    <div class="board-space">
+                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
+                    </div>
+                }
+                else
+                {
+                    <div class="board-space">
+                        &nbsp;
+                    </div>
+                }
+            }
+        </div>
+        <div class="row flex-align-center">
+            @for (var i = 0; i < 5; i++)
+            {
+                if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
+                {
+                    <div class="board-space">
+                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
+                    </div>
+                }
+                else
+                {
+                    <div class="board-space">
+                        &nbsp;
+                    </div>
+                }
+            }
+        </div>
+        <div class="row team-separator">
+            <div class="col-sm-12">
+            </div>
+        </div>
+        <div class="row flex-align-center">
+            @for (var i = 0; i < 5; i++)
+            {
+                if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
+                {
+                    <div class="board-space">
+                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
+                    </div>
+                }
+                else
+                {
+                    <div class="board-space">
+                        &nbsp;
+                    </div>
+                }
+            }
+        </div>
+        <div class="row flex-align-center">
+            @for (var i = 5; i < 10; i++)
+            {
+                if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
+                {
+                    <div class="board-space">
+                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
+                    </div>
+                }
+                else
+                {
+                    <div class="board-space">
+                        &nbsp;
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default panel-body ability-panel">
+            <label>@selectedCharacter.Name</label>
+            <hr />
+            <div class="row">
+                <div class="col-xs-6"><label>HP</label></div>
+                <div class="col-xs-6">@selectedCharacter.CurrentHealth / @selectedCharacter.TotalHealth</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6"><label>Attack</label></div>
+                <div class="col-xs-6">@selectedCharacter.Attack</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6"><label>Defense</label></div>
+                <div class="col-xs-6">@selectedCharacter.Defense</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6"><label>Speed</label></div>
+                <div class="col-xs-6">@selectedCharacter.Speed</div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+<div class="panel panel-body">
+    @foreach (var combatLog in Model.CombatLog)
+    {
+        <div class="row text-center">
+            <div class="combat-log-entry col-xs-12">
+                @combatLog
+            </div>
+        </div>
+    }
+</div>
