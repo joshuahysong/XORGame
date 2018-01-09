@@ -4,10 +4,14 @@
         var self = this;
 
         self.init = init;
-        self.PerformAction = null;
+        self.performActionURL = null;
+        self.friendlyTeamID = null;
+        self.enemyTeamID = null;
 
         function init(settings) {
-            self.PerformAction = settings.PerformAction;
+            self.performActionURL = settings.performActionURL;
+            self.friendlyTeamID = settings.friendlyTeamID;
+            self.enemyTeamID = settings.enemyTeamID;
             bindEvents();
         }
 
@@ -16,23 +20,20 @@
         }
 
         function selection() {
-            var selectedCharacter = $(".selected-character").data("characterid")
-            var targetCharacter = $(this).data("characterid")
-            if (selectedCharacter != targetCharacter) {
-                attack(selectedCharacter, targetCharacter);
-            }
+            performAction($(this).data("characterid"));
         }
 
-        function attack(selectedCharacter, targetCharacter) {
+        function performAction(targetCharacter) {
             // Get recent 2 combat log entries
             var logs = $('.combat-log-entry').slice(0,2).map(function () {
                 return $.trim($(this).text());
             }).get();
-            $.post(self.attackURL,
+            $.post(self.performActionURL,
                 {
-                    selectedCharacterID: selectedCharacter,
+                    friendlyTeamID: self.friendlyTeamID,
+                    enemyTeamID: self.enemyTeamID,
                     targetCharacterID: targetCharacter,
-                    combatLog: logs
+                    abilityID: 0
                 },
                 function (result) {
                     $('#board').html(result);

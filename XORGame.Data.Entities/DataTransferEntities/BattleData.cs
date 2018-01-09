@@ -7,6 +7,10 @@ namespace XORGame.Data.DataTransferEntities
     {
         public List<CharacterBattleData> Characters { get; set; }
 
+        public int FriendlyTeamID { get; set; }
+
+        public int EnemyTeamID { get; set; }
+
         public List<string> CombatLog { get; set; }
     }
 }

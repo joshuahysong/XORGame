@@ -10,7 +10,9 @@
     <script type="text/javascript">
         function setup() {
             arenaHelper.init({
-                attackURL: '@Url.Action("PerformAction", "Home")',
+                performActionURL: '@Url.Action("PerformAction", "Home")',
+                friendlyTeamID: '@Model.FriendlyTeamID',
+                enemyTeamID: '@Model.EnemyTeamID'
             });
         }
         jQuery(document).ready(setup);

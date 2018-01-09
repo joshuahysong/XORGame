@@ -44,6 +44,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="DataTransferEntities\BattleData.cs" />
     <Compile Include="DataTransferEntities\CharacterBattleData.cs" />
+    <Compile Include="IAbility.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerCharacter.cs" />
     <Compile Include="PlayerCharacterAbility.cs" />

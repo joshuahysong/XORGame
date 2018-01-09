@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using XORGame.Data.DataTransferEntities;
 using XORGame.Engines;
 
 namespace XORGame.Areas.Arena.Controllers
@@ -13,35 +15,31 @@ namespace XORGame.Areas.Arena.Controllers
         }
 
         [HttpPost]
-        public ActionResult PerformAction(string selectedCharacterID, string targetCharacterID, string AbilityID, List<string> combatLog)
+        public ActionResult PerformAction(string friendlyTeamID, string enemyTeamID, string targetCharacterID, string abilityID)
         {
+            if (int.TryParse(friendlyTeamID, out int intFriendlyTeamID) && 
+                int.TryParse(enemyTeamID, out int intEnemyTeamID) &&
+                int.TryParse(targetCharacterID, out int intTargetCharacterID) &&
+                int.TryParse(abilityID, out int intAbilityID))
+            {
+                BattleData battleData = EngineCache.GetBattleData(intFriendlyTeamID, intEnemyTeamID);
+                CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
+                CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == intTargetCharacterID).FirstOrDefault();
+                // TODO Add Ability stuff and things
+                if (selectedCharacter != null && targetedCharacter != null)
+                {
+                    // TODO Add validation that the action being performed is allowed.
+
+
+
+                    BattleEngine.AdvanceTurnMeters(battleData.Characters);
+                    EngineCache.SetBattleData(battleData);
+
+                    return PartialView("_Board", battleData);
+                }
+            }
+
             return null;
-            //CharacterBattleData selectedCharacter;
-            //CharacterBattleData targetedCharacter;
-            //if (combatLog == null)
-            //{
-            //    combatLog = new List<string>();
-            //}
-
-            //if (int.TryParse(selectedCharacterID, out int selectedID) && int.TryParse(targetCharacterID, out int targetID))
-            //{
-            //    selectedCharacter = Manager.GetCharacter(selectedID);
-            //    targetedCharacter = Manager.GetCharacter(targetID);
-
-            //    // TODO This calculation should be somewhere else. A Combat Rules class maybe?
-            //    targetedCharacter.CurrentHealth = targetedCharacter.CurrentHealth - selectedCharacter.Attack < 0 ? 0 : targetedCharacter.CurrentHealth - selectedCharacter.Attack;
-            //    combatLog.Insert(0, string.Format("{0} hits {1} doing {2} points of damage.\n\r", selectedCharacter.Name, targetedCharacter.Name, selectedCharacter.Attack));
-            //}
-
-            //List<CharacterBattleData> characters = Manager.GetCharacters();
-            //BattleEngine.AdvanceTurnMeters(characters);
-            //BattleData arena = new BattleData
-            //{
-            //    Characters = characters,
-            //    CombatLog = combatLog
-            //};
-
-            //return View("_Board", arena);
         }
     }
 }

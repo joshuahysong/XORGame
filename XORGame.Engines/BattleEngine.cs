@@ -11,16 +11,18 @@ namespace XORGame.Engines
         // TODO Move to config
         private static int FullTurnMeter = 1000;
 
-        public static BattleData GetBattleData(int Team1ID, int Team2ID)
+        public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
         {
             List<CharacterBattleData> characters = new List<CharacterBattleData>();
-            characters.AddRange(Manager.GetCharactersByTeamID(Team1ID, false));
-            characters.AddRange(Manager.GetCharactersByTeamID(Team2ID, true));
+            characters.AddRange(Manager.GetCharactersByTeamID(friendlyTeamID, false));
+            characters.AddRange(Manager.GetCharactersByTeamID(enemyTeamID, true));
             AdvanceTurnMeters(characters);
             return new BattleData
             {
                 Characters = characters,
-                CombatLog = new List<string>()
+                FriendlyTeamID = friendlyTeamID,
+                EnemyTeamID = enemyTeamID,
+                CombatLog = new List<string>()                
             };
         }
 

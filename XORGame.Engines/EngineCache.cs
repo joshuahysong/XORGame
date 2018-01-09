@@ -14,8 +14,13 @@ namespace XORGame.Engines
         {
             return GetCachedItem(string.Format("Battle_{0}_{1}", friendlyTeamID, enemyTeamID), () =>
             {
-                return BattleEngine.GetBattleData(friendlyTeamID, enemyTeamID);
+                return BattleEngine.GenerateBattleData(friendlyTeamID, enemyTeamID);
             });
+        }
+
+        public static void SetBattleData(BattleData battleData)
+        {
+            SetCachedItem(string.Format("Battle_{0}_{1}", battleData.FriendlyTeamID, battleData.EnemyTeamID), battleData);
         }
 
         private static void SetCachedItem(string cacheKey, object item, DateTimeOffset? offset = null)

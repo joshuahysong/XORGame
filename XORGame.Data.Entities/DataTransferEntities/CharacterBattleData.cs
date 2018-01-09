@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using XORGame.Data.Entities;
 
 namespace XORGame.Data.DataTransferEntities
 {
     public class CharacterBattleData
     {
         public int ID { get; set; }
-        
+
         public int TeamID { get; set; }
 
         public string Name { get; set; }
@@ -27,6 +29,8 @@ namespace XORGame.Data.DataTransferEntities
         public bool IsEnemy { get; set; }
 
         public bool IsSelected { get; set; }
+
+        public List<Ability> Abilities { get; set;}
 
         public decimal HealthPercentage
         {
