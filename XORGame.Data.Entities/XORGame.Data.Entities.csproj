@@ -42,7 +42,8 @@
   <ItemGroup>
     <Compile Include="Ability.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="DataTransferEntities\CharacterBattleInfo.cs" />
+    <Compile Include="DataTransferEntities\BattleData.cs" />
+    <Compile Include="DataTransferEntities\CharacterBattleData.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerCharacter.cs" />
     <Compile Include="PlayerCharacterAbility.cs" />

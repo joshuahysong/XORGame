@@ -4,6 +4,11 @@ namespace XORGame.Data.Entities
 {
     public class Character
     {
+        public Character()
+        {
+            PlayerCharacters = new HashSet<PlayerCharacter>();
+        }
+
         public int ID { get; set; }
         public string Name { get; set; }
         public int Health { get; set; }

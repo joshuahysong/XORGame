@@ -2,13 +2,13 @@
 
 namespace XORGame.Data.DataTransferEntities
 {
-    public class CharacterBattleInfo
+    public class CharacterBattleData
     {
         public int ID { get; set; }
+        
+        public int TeamID { get; set; }
 
         public string Name { get; set; }
-
-        public string Class { get; set; }
 
         public int TotalHealth { get; set; }
 
@@ -20,13 +20,13 @@ namespace XORGame.Data.DataTransferEntities
 
         public int Speed { get; set; }
 
+        public int Location { get; set; }
+
         public int TurnMeter { get; set; }
 
         public bool IsEnemy { get; set; }
 
         public bool IsSelected { get; set; }
-
-        public int Location { get; set; }
 
         public decimal HealthPercentage
         {

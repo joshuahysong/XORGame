@@ -1,17 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using XORGame.Data;
 using XORGame.Data.DataTransferEntities;
 
 namespace XORGame.Engines
 {
     public static class BattleEngine
     {
+        // TODO Move to config
         private static int FullTurnMeter = 1000;
 
-        public static CharacterBattleInfo GetNextTurnCharacter(List<CharacterBattleInfo> characters)
+        public static BattleData GetBattleData(int Team1ID, int Team2ID)
         {
-            List<CharacterBattleInfo> readyCharacters = CheckForReadyCharacters(characters);
+            List<CharacterBattleData> characters = new List<CharacterBattleData>();
+            characters.AddRange(Manager.GetCharactersByTeamID(Team1ID, false));
+            characters.AddRange(Manager.GetCharactersByTeamID(Team2ID, true));
+            AdvanceTurnMeters(characters);
+            return new BattleData
+            {
+                Characters = characters,
+                CombatLog = new List<string>()
+            };
+        }
+
+        public static void AdvanceTurnMeters(List<CharacterBattleData> characters)
+        {
+            List<CharacterBattleData> readyCharacters = CheckForReadyCharacters(characters);
             while (readyCharacters.Count == 0)
             {
                 characters.ForEach(character =>
@@ -24,13 +39,12 @@ namespace XORGame.Engines
 
             // Select a random readyCharacter
             characters.ForEach(c => { c.IsSelected = false; });
-            CharacterBattleInfo nextCharacter = readyCharacters[new Random().Next(0, readyCharacters.Count)];
+            CharacterBattleData nextCharacter = readyCharacters[new Random().Next(0, readyCharacters.Count)];
             nextCharacter.TurnMeter = 0;
             nextCharacter.IsSelected = true;
-            return nextCharacter;
         }
 
-        private static List<CharacterBattleInfo> CheckForReadyCharacters(List<CharacterBattleInfo> characters)
+        private static List<CharacterBattleData> CheckForReadyCharacters(List<CharacterBattleData> characters)
         {
             int maxSpeed = characters.Where(character => character.CurrentHealth > 0 &&
                 character.TurnMeter >= FullTurnMeter).Any() ? characters.Where(character => character.CurrentHealth > 0 &&

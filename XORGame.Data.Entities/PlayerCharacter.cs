@@ -4,6 +4,12 @@ namespace XORGame.Data.Entities
 {
     public class PlayerCharacter
     {
+        public PlayerCharacter()
+        {
+            PlayerCharacterAbilities = new HashSet<PlayerCharacterAbility>();
+            TeamRosters = new HashSet<TeamRoster>();
+        }
+
         public int ID { get; set; }
         public int PlayerID { get; set; }
         public int CharacterID { get; set; }
@@ -17,7 +23,8 @@ namespace XORGame.Data.Entities
 
         public virtual Player Player { get; set; }
         public virtual Character Character { get; set; }
-        public ICollection<TeamRoster> TeamRoster { get; set; }
+
+        public ICollection<TeamRoster> TeamRosters { get; set; }
         public ICollection<PlayerCharacterAbility> PlayerCharacterAbilities { get; set; }
     }
 }

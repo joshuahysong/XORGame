@@ -20,7 +20,7 @@ namespace XORGame.Data.Data
         public virtual DbSet<PlayerCharacter> PlayerCharacters { get; set; }
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<TeamRoster> TeamRoster { get; set; }
+        public virtual DbSet<TeamRoster> TeamRosters { get; set; }
 
         public XORGameContext() : base("name=XORGameContext")
         {

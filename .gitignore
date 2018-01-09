@@ -45,4 +45,4 @@ _ReSharper*/
 
 # StyleCop
 *.StyleCop
-XORGame\Web.config
+XORGame/Web.config

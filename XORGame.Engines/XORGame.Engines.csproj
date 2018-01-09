@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,12 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleEngine.cs" />
+    <Compile Include="EngineCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XORGame.Data.Entities\XORGame.Data.Entities.csproj">
       <Project>{6D2F5A17-6AB7-42D5-A399-506880133F3A}</Project>
       <Name>XORGame.Data.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XORGame.Data\XORGame.Data.csproj">
+      <Project>{EDB76A6D-1FCD-49EE-AC2B-5D9B739AEB71}</Project>
+      <Name>XORGame.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

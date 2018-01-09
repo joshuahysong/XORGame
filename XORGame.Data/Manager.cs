@@ -5,14 +5,26 @@ namespace XORGame.Data
 {
     public static class Manager
     {
-        public static List<CharacterBattleInfo> GetCharacters()
+        public static List<CharacterBattleData> GetCharactersByTeamID(int teamID, bool IsEnemyTeam = false)
         {
-            return CharacterRepository.GetCharacter();
-        }
-
-        public static CharacterBattleInfo GetCharacter(int ID)
-        {
-            return CharacterRepository.GetCharacter(ID);
+            List<CharacterBattleData> characters = new List<CharacterBattleData>();
+            CharacterRepository.GetTeamRoster(teamID).ForEach(roster =>
+            {
+                characters.Add(new CharacterBattleData()
+                {
+                    ID = roster.PlayerCharacter.ID,
+                    TeamID = roster.TeamID,
+                    Name = roster.PlayerCharacter.Name,
+                    TotalHealth = roster.PlayerCharacter.Health,
+                    CurrentHealth = roster.PlayerCharacter.Health,
+                    Attack = roster.PlayerCharacter.Attack,
+                    Defense = roster.PlayerCharacter.Defense,
+                    Speed = roster.PlayerCharacter.Speed,
+                    Location = roster.Location,
+                    IsEnemy = IsEnemyTeam
+                });
+            });
+            return characters;
         }
     }
 }

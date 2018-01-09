@@ -16,12 +16,12 @@ namespace XORGame.Data.Maps
             Property(x => x.Location).HasColumnName("Location");
 
             HasRequired(c => c.Team)
-                .WithMany(o => o.TeamRoster)
+                .WithMany(o => o.TeamRosters)
                 .HasForeignKey(c => c.TeamID)
                 .WillCascadeOnDelete(false);
 
             HasRequired(c => c.PlayerCharacter)
-                .WithMany(o => o.TeamRoster)
+                .WithMany(o => o.TeamRosters)
                 .HasForeignKey(c => c.PlayerCharacterID)
                 .WillCascadeOnDelete(false);
         }
