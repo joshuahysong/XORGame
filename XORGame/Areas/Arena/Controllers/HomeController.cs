@@ -28,9 +28,8 @@ namespace XORGame.Areas.Arena.Controllers
                 // TODO Add Ability stuff and things
                 if (selectedCharacter != null && targetedCharacter != null)
                 {
-                    // TODO Add validation that the action being performed is allowed.
-
-
+                    // TODO Add validation that the action being performed is allowed to prevent cheating.
+                    
 
                     BattleEngine.AdvanceTurnMeters(battleData.Characters);
                     EngineCache.SetBattleData(battleData);
