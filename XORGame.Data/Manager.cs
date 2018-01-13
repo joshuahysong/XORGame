@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using XORGame.Data.DataTransferEntities;
+using XORGame.Data.Entities;
 
 namespace XORGame.Data
 {
@@ -25,6 +26,11 @@ namespace XORGame.Data
                 });
             });
             return characters;
+        }
+
+        public static Ability GetAbility(int abilityID)
+        {
+            return DataCache.GetAbility(abilityID);
         }
     }
 }

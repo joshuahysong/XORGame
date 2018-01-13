@@ -13,6 +13,9 @@ namespace XORGame.Data.Maps
 
             Property(x => x.ID).HasColumnName("ID");
             Property(x => x.Name).HasColumnName("Name");
+            Property(x => x.Type).HasColumnName("Type");
+            Property(x => x.EffectArea).HasColumnName("EffectArea");
+            Property(x => x.Cooldown).HasColumnName("Cooldown");
             Property(x => x.Description).HasColumnName("Description");
         }
     }
