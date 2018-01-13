@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using XORGame.Data.Data;
-using XORGame.Data.DataTransferEntities;
 using XORGame.Data.Entities;
 using System.Data.Entity;
 

@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Abilities\RangedAttack.cs" />
     <Compile Include="AbilityEngine.cs" />
-    <Compile Include="AbilityFactory.cs" />
     <Compile Include="BattleEngine.cs" />
     <Compile Include="EngineCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

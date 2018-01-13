@@ -10,7 +10,7 @@ using XORGame.Data.Entities;
 using System.Runtime.Serialization;
 using XORGame.Data.Maps;
 
-namespace XORGame.Data.Data
+namespace XORGame.Data
 {
     public class XORGameContext : DbContext
     {

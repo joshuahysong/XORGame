@@ -33,7 +33,7 @@
                     friendlyTeamID: self.friendlyTeamID,
                     enemyTeamID: self.enemyTeamID,
                     targetCharacterID: targetCharacter,
-                    abilityID: 0
+                    abilityID: 1
                 },
                 function (result) {
                     $('#board').html(result);

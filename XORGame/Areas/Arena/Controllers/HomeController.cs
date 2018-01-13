@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using XORGame.Data;
 using XORGame.Data.DataTransferEntities;
+using XORGame.Data.Entities;
+using XORGame.Data.Entities.Contracts;
 using XORGame.Engines;
 
 namespace XORGame.Areas.Arena.Controllers
@@ -25,11 +27,13 @@ namespace XORGame.Areas.Arena.Controllers
                 BattleData battleData = EngineCache.GetBattleData(intFriendlyTeamID, intEnemyTeamID);
                 CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
                 CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == intTargetCharacterID).FirstOrDefault();
+                Ability ability = Manager.GetAbility(intAbilityID);
                 // TODO Add Ability stuff and things
-                if (selectedCharacter != null && targetedCharacter != null)
+                if (selectedCharacter != null && targetedCharacter != null && ability != null)
                 {
-                    // TODO Add validation that the action being performed is allowed to prevent cheating.
-                    
+                    // TODO Add validation that ability action being performed is allowed to prevent cheating.
+                    IAbilityAction abilityAction = AbilityEngine.GetAbility(ability.Name);
+                    abilityAction.AdjustCharacterStats(battleData, targetedCharacter);
 
                     BattleEngine.AdvanceTurnMeters(battleData.Characters);
                     EngineCache.SetBattleData(battleData);
