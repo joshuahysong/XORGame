@@ -11,7 +11,7 @@ namespace XORGame.Data.Maps
 
             HasKey(x => new { x.AbilityID, x.PlayerCharacterID });
 
-            Property(x => x.AbilityID).HasColumnName("TeamID");
+            Property(x => x.AbilityID).HasColumnName("AbilityID");
             Property(x => x.PlayerCharacterID).HasColumnName("PlayerCharacterID");
             Property(x => x.Level).HasColumnName("Level");
 

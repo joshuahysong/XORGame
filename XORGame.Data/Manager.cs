@@ -22,7 +22,8 @@ namespace XORGame.Data
                     Defense = roster.PlayerCharacter.Defense,
                     Speed = roster.PlayerCharacter.Speed,
                     Location = roster.Location,
-                    IsEnemy = IsEnemyTeam
+                    IsEnemy = IsEnemyTeam,
+                    Abilities = CharacterRepository.GetPlayerCharacterAbilities(roster.PlayerCharacter)
                 });
             });
             return characters;
@@ -31,6 +32,11 @@ namespace XORGame.Data
         public static Ability GetAbility(int abilityID)
         {
             return DataCache.GetAbility(abilityID);
+        }
+
+        public static Ability GetAbility(string abilityName)
+        {
+            return DataCache.GetAbility(abilityName);
         }
     }
 }

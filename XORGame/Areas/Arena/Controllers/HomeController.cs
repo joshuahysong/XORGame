@@ -28,20 +28,23 @@ namespace XORGame.Areas.Arena.Controllers
                 CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
                 CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == intTargetCharacterID).FirstOrDefault();
                 Ability ability = Manager.GetAbility(intAbilityID);
-                // TODO Add Ability stuff and things
+
                 if (selectedCharacter != null && targetedCharacter != null && ability != null)
                 {
                     // TODO Add validation that ability action being performed is allowed to prevent cheating.
                     IAbilityAction abilityAction = AbilityEngine.GetAbility(ability.Name);
-                    abilityAction.AdjustCharacterStats(battleData, targetedCharacter);
-
-                    BattleEngine.AdvanceTurnMeters(battleData.Characters);
-                    EngineCache.SetBattleData(battleData);
+                    if (abilityAction.IsValidTarget(battleData, targetedCharacter))
+                    {
+                        abilityAction.AdjustCharacterStats(battleData, targetedCharacter);
+                        BattleEngine.AdvanceTurnMeters(battleData.Characters);
+                        EngineCache.SetBattleData(battleData);
+                    }
 
                     return PartialView("_Board", battleData);
                 }
             }
 
+            // TODO Redirect to same board state
             return null;
         }
     }

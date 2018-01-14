@@ -2,6 +2,7 @@
 
     var arenaHelperLib = function () {
         var self = this;
+        var targetedCharactterID = 0;
 
         self.init = init;
         self.performActionURL = null;
@@ -17,29 +18,34 @@
 
         function bindEvents() {
             $('.character-box').on('click', selection);
+            $('.btn-ability').on('click', performAction);
         }
 
         function selection() {
-            performAction($(this).data("characterid"));
-        }
+            $('.character-box').removeClass("targeted-character");
+            $(this).addClass("targeted-character");
+            targetedCharactterID = $(this).data("characterid");        }
 
-        function performAction(targetCharacter) {
+        function performAction() {
             // Get recent 2 combat log entries
-            var logs = $('.combat-log-entry').slice(0,2).map(function () {
-                return $.trim($(this).text());
-            }).get();
-            $.post(self.performActionURL,
-                {
-                    friendlyTeamID: self.friendlyTeamID,
-                    enemyTeamID: self.enemyTeamID,
-                    targetCharacterID: targetCharacter,
-                    abilityID: 1
-                },
-                function (result) {
-                    $('#board').html(result);
-                    bindEvents();
-                }
-            );
+            //var logs = $('.combat-log-entry').slice(0,2).map(function () {
+            //    return $.trim($(this).text());
+            //}).get();
+            var abilityID = $(this).data("abilityid");
+            if (abilityID) {
+                $.post(self.performActionURL,
+                    {
+                        friendlyTeamID: self.friendlyTeamID,
+                        enemyTeamID: self.enemyTeamID,
+                        targetCharacterID: targetedCharactterID,
+                        abilityID: abilityID
+                    },
+                    function (result) {
+                        $('#board').html(result);
+                        bindEvents();
+                    }
+                );
+            }
         }
     };
 

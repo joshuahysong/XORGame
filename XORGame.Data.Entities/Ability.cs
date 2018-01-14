@@ -7,6 +7,7 @@ namespace XORGame.Data.Entities
         public Ability()
         {
             PlayerCharacterAbilities = new HashSet<PlayerCharacterAbility>();
+            CurrentCooldown = 0;
         }
 
         public int ID { get; set; }
@@ -18,9 +19,11 @@ namespace XORGame.Data.Entities
 
         public virtual ICollection<PlayerCharacterAbility> PlayerCharacterAbilities { get; set; }
 
+        public int CurrentCooldown { get; set; }
+
         public bool IsOnCooldown(Ability ability)
         {
-            return Cooldown > 0;
+            return CurrentCooldown > 0;
         }
     }
 }

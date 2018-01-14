@@ -1,15 +1,18 @@
 ﻿using System.Linq;
 using XORGame.Data.DataTransferEntities;
+using XORGame.Data.Entities;
 using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Engines.Abilities
 {
-    public class RangedAttack : IAbilityAction, IAttack
+    public class RangedAttack : MustInitialize<Ability>, IAbilityAction, IAttack
     {
+        public Ability Ability { get; private set; }
         public int BaseDamage { get; set; }
 
-        public RangedAttack()
+        public RangedAttack(Ability ability) : base(ability)
         {
+            Ability = ability;
             BaseDamage = 10;
         }
 
@@ -19,7 +22,7 @@ namespace XORGame.Engines.Abilities
             return (selectedCharacter != null &&
                 targetedCharacter != null &&
                 selectedCharacter.ID != targetedCharacter.ID &&
-                targetedCharacter.IsEnemy);
+                selectedCharacter.TeamID != targetedCharacter.TeamID);
         }
 
         public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using XORGame.Data;
 using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Engines
@@ -17,7 +18,7 @@ namespace XORGame.Engines
             Abilities = new List<IAbilityAction>();
             types.ForEach(t =>
             {
-                Abilities.Add((IAbilityAction)Activator.CreateInstance(t));
+                Abilities.Add((IAbilityAction)Activator.CreateInstance(t, Manager.GetAbility(t.Name)));
             });
         }
 

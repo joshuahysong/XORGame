@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\BasicHeal.cs" />
     <Compile Include="Abilities\RangedAttack.cs" />
     <Compile Include="AbilityEngine.cs" />
     <Compile Include="BattleEngine.cs" />

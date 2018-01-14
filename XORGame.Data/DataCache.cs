@@ -22,6 +22,12 @@ namespace XORGame.Data
             return GetAbilities().FirstOrDefault(a => a.ID == abilityID);
         }
 
+        public static Ability GetAbility(string abilityName)
+        {
+            // We need to check against the trimed and uppered version of the ability's name also to match against classes.
+            return GetAbilities().FirstOrDefault(a => a.Name == abilityName || a.Name.ToUpper().Replace(" ", string.Empty) == abilityName.ToUpper());
+        }
+
         private static void SetCachedItem(string cacheKey, object item, DateTimeOffset? offset = null)
         {
             ObjectCache cache = MemoryCache.Default;

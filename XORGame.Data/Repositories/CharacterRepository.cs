@@ -14,5 +14,13 @@ namespace XORGame.Data
                 return db.TeamRosters.Include(x => x.PlayerCharacter).Include(x => x.Team).Where(tr => tr.TeamID == teamID).ToList();
             }
         }
+
+        internal static List<Ability> GetPlayerCharacterAbilities(PlayerCharacter playerCharacter)
+        {
+            using (XORGameContext db = new XORGameContext())
+            {
+                return db.PlayerCharacterAbilities.Where(pc => pc.PlayerCharacterID == playerCharacter.ID).Select(a => a.Ability).ToList();
+            }
+        }
     }
 }

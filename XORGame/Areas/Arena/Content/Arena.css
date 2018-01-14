@@ -38,16 +38,17 @@
     display: flex;
 }
 
-:focus {
-    outline: -webkit-focus-ring-color auto 5px;
-}
-
 .character-box:hover {
     background-color: #F7F9F9;
 }
 
 .selected-character {
-    outline: -webkit-focus-ring-color auto 5px;
+    outline: gold auto 5px;
+    background-color: cornsilk;
+}
+
+.targeted-character {
+    outline: red auto 5px;
 }
 
 .hp-bar {
@@ -78,4 +79,12 @@
 
 .dead-character {
     color: lightgray
+}
+
+.btn-group-justified > .btn-group:nth-of-type(even) {
+    width: .25%;
+}
+
+.btn-ability-group {
+    margin-bottom: 15px;
 }
