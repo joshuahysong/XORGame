@@ -17,8 +17,6 @@ namespace XORGame.Data.Maps
             Property(x => x.EffectArea).HasColumnName("EffectArea");
             Property(x => x.Cooldown).HasColumnName("Cooldown");
             Property(x => x.Description).HasColumnName("Description");
-
-            Ignore(x => x.CurrentCooldown);
         }
     }
 }

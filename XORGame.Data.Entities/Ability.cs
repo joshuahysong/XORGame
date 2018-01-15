@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.Entities
 {
@@ -7,7 +10,6 @@ namespace XORGame.Data.Entities
         public Ability()
         {
             PlayerCharacterAbilities = new HashSet<PlayerCharacterAbility>();
-            CurrentCooldown = 0;
         }
 
         public int ID { get; set; }
@@ -18,12 +20,5 @@ namespace XORGame.Data.Entities
         public string Description { get; set; }
 
         public virtual ICollection<PlayerCharacterAbility> PlayerCharacterAbilities { get; set; }
-
-        public int CurrentCooldown { get; set; }
-
-        public bool IsOnCooldown(Ability ability)
-        {
-            return CurrentCooldown > 0;
-        }
     }
 }

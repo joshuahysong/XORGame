@@ -27,15 +27,14 @@ namespace XORGame.Areas.Arena.Controllers
                 BattleData battleData = EngineCache.GetBattleData(intFriendlyTeamID, intEnemyTeamID);
                 CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
                 CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == intTargetCharacterID).FirstOrDefault();
-                Ability ability = Manager.GetAbility(intAbilityID);
+                IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == intAbilityID);
 
                 if (selectedCharacter != null && targetedCharacter != null && ability != null)
                 {
                     // TODO Add validation that ability action being performed is allowed to prevent cheating.
-                    IAbilityAction abilityAction = AbilityEngine.GetAbility(ability.Name);
-                    if (abilityAction.IsValidTarget(battleData, targetedCharacter))
+                    if (ability.IsValidTarget(battleData, targetedCharacter))
                     {
-                        abilityAction.AdjustCharacterStats(battleData, targetedCharacter);
+                        ability.AdjustCharacterStats(battleData, targetedCharacter);
                         BattleEngine.AdvanceTurnMeters(battleData.Characters);
                         EngineCache.SetBattleData(battleData);
                     }

@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Linq;
 using XORGame.Data.DataTransferEntities;
-using XORGame.Data.Entities;
 using XORGame.Data.Entities.Contracts;
 
-namespace XORGame.Engines.Abilities
+namespace XORGame.Data.Entities.Abilities
 {
-    public class BasicHeal : MustInitialize<Ability>, IAbilityAction
+    public class BasicHeal : DefaultAbilityAction, IAbilityAction
     {
-        public Ability Ability { get; private set; }
-
-        public BasicHeal(Ability ability) : base(ability)
-        {
-            Ability = ability;
-        }
+        public BasicHeal(Ability ability) : base(ability) { }
 
         public bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
             return (selectedCharacter != null && targetedCharacter != null &&
-                selectedCharacter.TeamID == targetedCharacter.TeamID);
+                selectedCharacter.TeamID == targetedCharacter.TeamID &&
+                CurrentCooldown == 0);
         }
 
         public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)
@@ -29,6 +24,7 @@ namespace XORGame.Engines.Abilities
             {
                 targetedCharacter.CurrentHealth = targetedCharacter.CurrentHealth + healAmount < targetedCharacter.TotalHealth ? 
                     targetedCharacter.CurrentHealth + healAmount : targetedCharacter.TotalHealth;
+                StartCooldown();
             }
         }
     }

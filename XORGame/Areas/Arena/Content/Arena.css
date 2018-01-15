@@ -68,8 +68,8 @@
     width: 130px;
     min-height: 130px;
     min-width: 130px;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border: 1px dotted lightgray;
 }
 
@@ -81,7 +81,7 @@
     color: lightgray
 }
 
-.btn-group-justified > .btn-group:nth-of-type(even) {
+.btn-group-justified > .btn-group:nth-of-type(odd) {
     width: .25%;
 }
 

@@ -8,7 +8,6 @@ namespace XORGame.Engines
 {
     public static class BattleEngine
     {
-        // TODO Move to config
         private static int FullTurnMeter = 1000;
 
         public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
@@ -42,8 +41,7 @@ namespace XORGame.Engines
             // Select a random readyCharacter
             characters.ForEach(c => { c.IsSelected = false; });
             CharacterBattleData nextCharacter = readyCharacters[new Random().Next(0, readyCharacters.Count)];
-            nextCharacter.TurnMeter = 0;
-            nextCharacter.IsSelected = true;
+            SetCharacterReady(nextCharacter);
         }
 
         private static List<CharacterBattleData> CheckForReadyCharacters(List<CharacterBattleData> characters)
@@ -56,6 +54,16 @@ namespace XORGame.Engines
                 .Where(character => character.CurrentHealth > 0 &&
                     character.TurnMeter >= FullTurnMeter &&
                     character.Speed == maxSpeed).ToList();
+        }
+
+        private static void SetCharacterReady(CharacterBattleData character)
+        {
+            character.TurnMeter = 0;
+            character.IsSelected = true;
+            character.Abilities.ForEach(ability =>
+            {
+                ability.CurrentCooldown = ability.CurrentCooldown > 0 ? ability.CurrentCooldown-- : 0;
+            });
         }
     }
 }
