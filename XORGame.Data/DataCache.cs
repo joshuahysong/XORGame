@@ -1,27 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using XORGame.Data.Entities;
-using XORGame.Data.Repositories;
 
 namespace XORGame.Data
 {
     public static class DataCache
     {
-        public static List<Ability> GetAbilities()
-        {
-            return GetCachedItem("Abilities", () =>
-            {
-                return AbilityRepository.GetAbilities();
-            });
-        }
-
-        public static Ability GetAbility(int abilityID)
-        {
-            return GetAbilities().FirstOrDefault(a => a.ID == abilityID);
-        }
-
         private static void SetCachedItem(string cacheKey, object item, DateTimeOffset? offset = null)
         {
             ObjectCache cache = MemoryCache.Default;

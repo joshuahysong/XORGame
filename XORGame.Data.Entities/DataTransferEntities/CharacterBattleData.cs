@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using XORGame.Data.Entities;
+using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.DataTransferEntities
 {
@@ -30,7 +31,7 @@ namespace XORGame.Data.DataTransferEntities
 
         public bool IsSelected { get; set; }
 
-        public List<Ability> Abilities { get; set;}
+        public List<IAbilityAction> Abilities { get; set;}
 
         public decimal HealthPercentage
         {

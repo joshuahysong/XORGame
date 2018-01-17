@@ -9,7 +9,7 @@
         data-characterid="@Model.ID" 
         class="panel panel-default panel-body character-box @(Model.IsSelected ? "selected-character" : "")">
     <div>
-        @Html.Label(Model.Name)
+        <label>@Model.Name</label>
     </div>
     <div class="hp-bar progress text-center vertial-align-bottom">
         <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "progress-bar-danger" : "progress-bar-warning" : "progress-bar-success")"
