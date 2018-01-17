@@ -18,6 +18,10 @@ namespace XORGame.Data.Entities.Contracts
 
         int CurrentCooldown { get; set; }
 
+        bool IsOnCooldown();
+
+        void StartCooldown();
+
         bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter);
 
         void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetCharacter);

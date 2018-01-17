@@ -4,7 +4,7 @@ using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.Entities.Abilities
 {
-    public class RangedAttack : DefaultAbilityAction, IAbilityAction, IAttack
+    public class RangedAttack : AbilityActionBase, IAbilityAction, IAttack
     {
         public int BaseDamage { get; set; }
 

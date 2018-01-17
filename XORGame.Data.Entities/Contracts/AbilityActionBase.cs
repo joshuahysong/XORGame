@@ -1,8 +1,9 @@
-﻿using XORGame.Data.Entities;
+﻿using XORGame.Data.DataTransferEntities;
+using XORGame.Data.Entities;
 
-namespace XORGame.Data.DataTransferEntities
+namespace XORGame.Data.Entities.Contracts
 {
-    public abstract class DefaultAbilityAction
+    public abstract class AbilityActionBase
     {
         public int ID { get; set; }
 
@@ -18,7 +19,7 @@ namespace XORGame.Data.DataTransferEntities
 
         public int CurrentCooldown { get; set; }
 
-        public DefaultAbilityAction(Ability ability)
+        public AbilityActionBase(Ability ability)
         {
             ID = ability.ID;
             Name = ability.Name;
@@ -31,7 +32,9 @@ namespace XORGame.Data.DataTransferEntities
 
         public void StartCooldown()
         {
-            CurrentCooldown = Cooldown;
+            // We do Cooldown +1 since cooldown is reduced at the BEGINNING of a turn.
+            // This way we get a full amount of turns equal to the cooldown before the ability can be used again.
+            CurrentCooldown = Cooldown + 1;
         }
 
         public bool IsOnCooldown()

@@ -5,7 +5,7 @@ using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.Entities.Abilities
 {
-    public class BasicHeal : DefaultAbilityAction, IAbilityAction
+    public class BasicHeal : AbilityActionBase, IAbilityAction
     {
         public BasicHeal(Ability ability) : base(ability) { }
 
@@ -14,7 +14,7 @@ namespace XORGame.Data.Entities.Abilities
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
             return (selectedCharacter != null && targetedCharacter != null &&
                 selectedCharacter.TeamID == targetedCharacter.TeamID &&
-                CurrentCooldown == 0);
+                !IsOnCooldown());
         }
 
         public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)

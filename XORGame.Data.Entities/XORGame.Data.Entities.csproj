@@ -46,7 +46,7 @@
     <Compile Include="Ability.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Contracts\IAbilityAction.cs" />
-    <Compile Include="DataTransferEntities\DefaultAbilityAction.cs" />
+    <Compile Include="Contracts\AbilityActionBase.cs" />
     <Compile Include="DataTransferEntities\BattleData.cs" />
     <Compile Include="DataTransferEntities\CharacterBattleData.cs" />
     <Compile Include="Contracts\IAttack.cs" />

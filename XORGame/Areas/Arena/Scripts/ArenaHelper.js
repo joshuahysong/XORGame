@@ -31,20 +31,22 @@
             //var logs = $('.combat-log-entry').slice(0,2).map(function () {
             //    return $.trim($(this).text());
             //}).get();
-            var abilityID = $(this).data("abilityid");
-            if (abilityID) {
-                $.post(self.performActionURL,
-                    {
-                        friendlyTeamID: self.friendlyTeamID,
-                        enemyTeamID: self.enemyTeamID,
-                        targetCharacterID: targetedCharactterID,
-                        abilityID: abilityID
-                    },
-                    function (result) {
-                        $('#board').html(result);
-                        bindEvents();
-                    }
-                );
+            if (!$(this).children(':first').prop("disabled")) {
+                var abilityID = $(this).data("abilityid");
+                if (abilityID) {
+                    $.post(self.performActionURL,
+                        {
+                            friendlyTeamID: self.friendlyTeamID,
+                            enemyTeamID: self.enemyTeamID,
+                            targetCharacterID: targetedCharactterID,
+                            abilityID: abilityID
+                        },
+                        function (result) {
+                            $('#board').html(result);
+                            bindEvents();
+                        }
+                    );
+                }
             }
         }
     };

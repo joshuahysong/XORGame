@@ -81,10 +81,18 @@
     color: lightgray
 }
 
-.btn-group-justified > .btn-group:nth-of-type(odd) {
-    width: .25%;
+.ability-row {
+    margin-bottom: 15px;
 }
 
-.btn-ability-group {
-    margin-bottom: 15px;
+.ability-column {
+    padding-right: 0;
+}
+
+.ability-column-info {
+    padding-left: 5px;
+}
+
+.btn-group-justified > .btn-ability-cooldown {
+    width: .25%;
 }

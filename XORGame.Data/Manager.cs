@@ -55,15 +55,5 @@ namespace XORGame.Data
             });
             return abilities;
         }
-
-        public static Ability GetAbility(int abilityID)
-        {
-            return DataCache.GetAbility(abilityID);
-        }
-
-        public static Ability GetAbility(string abilityName)
-        {
-            return DataCache.GetAbility(abilityName);
-        }
     }
 }

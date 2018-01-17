@@ -8,7 +8,7 @@ using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.Entities.Abilities
 {
-    public class MeleeAttack : DefaultAbilityAction, IAbilityAction, IAttack
+    public class MeleeAttack : AbilityActionBase, IAbilityAction, IAttack
     {
         public int BaseDamage { get; set; }
 
@@ -19,6 +19,7 @@ namespace XORGame.Data.Entities.Abilities
 
         public bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter)
         {
+            // TODO Change to account for characters blocking melee targets
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
             return (selectedCharacter != null &&
                 targetedCharacter != null &&

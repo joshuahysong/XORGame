@@ -62,7 +62,7 @@ namespace XORGame.Engines
             character.IsSelected = true;
             character.Abilities.ForEach(ability =>
             {
-                ability.CurrentCooldown = ability.CurrentCooldown > 0 ? ability.CurrentCooldown-- : 0;
+                ability.CurrentCooldown = ability.CurrentCooldown > 0 ? ability.CurrentCooldown - 1 : 0;
             });
         }
     }
