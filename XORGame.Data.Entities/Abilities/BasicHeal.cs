@@ -20,7 +20,8 @@ namespace XORGame.Data.Entities.Abilities
         public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-            if (int.TryParse(Math.Round(targetedCharacter.TotalHealth * 0.4).ToString(), out int healAmount))
+            int healAmount;
+            if (int.TryParse(Math.Round(targetedCharacter.TotalHealth * 0.4).ToString(), out healAmount))
             {
                 targetedCharacter.CurrentHealth = targetedCharacter.CurrentHealth + healAmount < targetedCharacter.TotalHealth ? 
                     targetedCharacter.CurrentHealth + healAmount : targetedCharacter.TotalHealth;
