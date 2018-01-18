@@ -19,7 +19,9 @@ namespace XORGame.Data.Entities.Abilities
             return (selectedCharacter != null &&
                 targetedCharacter != null &&
                 selectedCharacter.ID != targetedCharacter.ID &&
-                selectedCharacter.TeamID != targetedCharacter.TeamID);
+                selectedCharacter.TeamID != targetedCharacter.TeamID &&
+                targetedCharacter.IsAlive() &&
+                !IsOnCooldown());
         }
 
         public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)
