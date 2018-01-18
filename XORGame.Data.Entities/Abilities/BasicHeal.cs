@@ -14,6 +14,7 @@ namespace XORGame.Data.Entities.Abilities
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
             return (selectedCharacter != null && targetedCharacter != null &&
                 selectedCharacter.TeamID == targetedCharacter.TeamID &&
+                targetedCharacter.IsAlive() && 
                 !IsOnCooldown());
         }
 

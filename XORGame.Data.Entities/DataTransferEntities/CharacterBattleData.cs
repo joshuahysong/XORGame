@@ -48,5 +48,10 @@ namespace XORGame.Data.DataTransferEntities
                 return (Convert.ToDecimal(TurnMeter) / Convert.ToDecimal(1000)) * 100;
             }
         }
+
+        public bool IsAlive()
+        {
+            return CurrentHealth > 0;
+        }
     }
 }

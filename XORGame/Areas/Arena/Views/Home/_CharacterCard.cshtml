@@ -4,30 +4,39 @@
     var healthPercentage = Math.Ceiling(Model.HealthPercentage);
     var turnMeterPercentage = Model.IsSelected ? 100 : Math.Ceiling(Model.TurnMeterPercentage);
 }
-<div id="character-@Model.ID" 
-        data-isEnemy="@Model.IsEnemy.ToString().ToLower()"
-        data-characterid="@Model.ID" 
-        class="panel panel-default panel-body character-box @(Model.IsSelected ? "selected-character" : "")">
+<div id="character-@Model.ID"
+     data-isEnemy="@Model.IsEnemy.ToString().ToLower()"
+     data-characterid="@Model.ID"
+     class="panel panel-default panel-body character-box @(Model.IsSelected ? "selected-character" : "")">
     <div>
         <label>@Model.Name</label>
     </div>
-    <div class="hp-bar progress text-center vertial-align-bottom">
-        <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "progress-bar-danger" : "progress-bar-warning" : "progress-bar-success")"
-                style="width: @(healthPercentage.ToString())%;"
-                role="progressbar"
-                aria-valuenow=@healthPercentage
-                aria-valuemin="0"
-                aria-valuemax="100">
+    @if (Model.IsAlive())
+    {
+        <div class="hp-bar progress text-center vertial-align-bottom">
+            <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "progress-bar-danger" : "progress-bar-warning" : "progress-bar-success")"
+                 style="width: @(healthPercentage.ToString())%;"
+                 role="progressbar"
+                 aria-valuenow=@healthPercentage
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+            </div>
+            <span>@(healthPercentage.ToString())%</span>
         </div>
-        <span>@(healthPercentage.ToString())%</span>
-    </div>
-    <div class="speed-bar progress text-center vertial-align-bottom">
-        <div id="@(Model.ID)-speed-bar" class="progress-bar progress-bar-info"
-                style="width: @(turnMeterPercentage.ToString())%;"
-                role="progressbar"
-                aria-valuenow=@healthPercentage
-                aria-valuemin="0"
-                aria-valuemax="100">
+        <div class="speed-bar progress text-center vertial-align-bottom">
+            <div id="@(Model.ID)-speed-bar" class="progress-bar progress-bar-info"
+                 style="width: @(turnMeterPercentage.ToString())%;"
+                 role="progressbar"
+                 aria-valuenow=@healthPercentage
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <span>DEAD</span>
+        </div>
+    }
 </div>
