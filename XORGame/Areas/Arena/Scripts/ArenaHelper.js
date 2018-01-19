@@ -27,10 +27,6 @@
             targetedCharactterID = $(this).data("characterid");        }
 
         function performAction() {
-            // Get recent 2 combat log entries
-            //var logs = $('.combat-log-entry').slice(0,2).map(function () {
-            //    return $.trim($(this).text());
-            //}).get();
             if (!$(this).children(':first').prop("disabled")) {
                 var abilityID = $(this).data("abilityid");
                 if (abilityID) {
