@@ -16,10 +16,14 @@
 }
 
 .selected-character {
-    outline: gold auto 5px;
-    background-color: cornsilk;
+    background-color: #ffff99;
 }
 
-.targeted-character {
-    outline: red auto 5px;
+.targeted-space {
+    border: blue solid 1px;
+    background-color: azure;
+}
+
+.enemy-character {
+    background-color: #ffe6e6;
 }

@@ -23,7 +23,7 @@ namespace XORGame.Engines
             characters.AddRange(Manager.GetCharactersByTeamID(enemyTeamID, true));
             PopulateBoard(battleData, characters);
 
-            AdvanceTurnMeters(battleData.Characters);
+            AdvanceTurnMeters(battleData);
 
             return battleData;
         }
@@ -51,26 +51,25 @@ namespace XORGame.Engines
             battleData.Boardspaces.ForEach(boardSpace =>
             {
                 boardSpace.Character = characters.FirstOrDefault(character =>
-                    character.Coordinates.X == boardSpace.Coordinates.X &&
-                    character.Coordinates.Y == boardSpace.Coordinates.Y);
+                    boardSpace.IsEqualCoordinates(character.Coordinates));
             });
         }
 
-        public static void AdvanceTurnMeters(List<CharacterBattleData> characters)
+        public static void AdvanceTurnMeters(BattleData battleData)
         {
-            List<CharacterBattleData> readyCharacters = CheckForReadyCharacters(characters);
+            List<CharacterBattleData> readyCharacters = CheckForReadyCharacters(battleData.Characters);
             while (readyCharacters.Count == 0)
             {
-                characters.ForEach(character =>
+                battleData.Characters.ForEach(character =>
                 {
                     character.TurnMeter += character.Speed;
                 });
 
-                readyCharacters = CheckForReadyCharacters(characters);
+                readyCharacters = CheckForReadyCharacters(battleData.Characters);
             }
 
             // Select a random readyCharacter
-            characters.ForEach(c => { c.IsSelected = false; });
+            battleData.Characters.ForEach(c => { c.IsSelected = false; });
             CharacterBattleData nextCharacter = readyCharacters[new Random().Next(0, readyCharacters.Count)];
             SetCharacterReady(nextCharacter);
         }

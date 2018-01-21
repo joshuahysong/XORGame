@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using XORGame.Data.DataTransferEntities;
 
 namespace XORGame.Data.DataTransferEntities
 {

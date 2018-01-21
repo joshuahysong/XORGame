@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
 using XORGame.Data;
@@ -19,21 +20,28 @@ namespace XORGame.Areas.Arena.Controllers
         }
 
         [HttpPost]
-        public ActionResult PerformAction(int friendlyTeamID, int enemyTeamID, int targetCharacterID, int abilityID)
+        public ActionResult PerformAction(int friendlyTeamID, int enemyTeamID, int abilityID, string targetedSpaceID)
         {
             BattleData battleData = EngineCache.GetBattleData(User.Identity.GetUserId(), friendlyTeamID, enemyTeamID);
-            CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-            CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == targetCharacterID).FirstOrDefault();
-            IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == abilityID);
-
-            if (selectedCharacter != null && targetedCharacter != null && ability != null)
+            string[] targetCoordinates = targetedSpaceID.Split('-');
+            if (targetCoordinates.Length == 3 &&
+                int.TryParse(targetCoordinates[1], out int targetX) && 
+                int.TryParse(targetCoordinates[2], out int targetY))
             {
-                // TODO Add validation that ability action being performed is allowed to prevent cheating.
-                if (ability.IsValidTarget(battleData, targetedCharacter))
+                CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
+                Boardspace targetedSpace = battleData.Boardspaces
+                    .FirstOrDefault(bs => bs.IsEqualCoordinates(new Point(targetX, targetY)));
+                IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == abilityID);
+
+                if (selectedCharacter != null && targetedSpace != null && ability != null)
                 {
-                    ability.AdjustCharacterStats(battleData, targetedCharacter);
-                    BattleEngine.AdvanceTurnMeters(battleData.Characters);
-                    EngineCache.SetBattleData(User.Identity.GetUserId(), battleData);
+                    if (ability.IsValidTarget(battleData, targetedSpace))
+                    {
+                        // TODO Add validation that ability action being performed is allowed to prevent cheating.
+                        ability.AdjustCharacterStats(battleData, targetedSpace);
+                        BattleEngine.AdvanceTurnMeters(battleData);
+                        EngineCache.SetBattleData(User.Identity.GetUserId(), battleData);
+                    }
                 }
             }
 
