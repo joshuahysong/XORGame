@@ -22,8 +22,8 @@ namespace XORGame.Data.Entities.Contracts
 
         void StartCooldown();
 
-        bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter);
+        bool IsValidTarget(BattleData battleData, Boardspace targetSpace);
 
-        void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetCharacter);
+        void AdjustCharacterStats(BattleData battleData, Boardspace targetSpace);
     }
 }

@@ -13,5 +13,10 @@ namespace XORGame.Data.DataTransferEntities
         public Point Coordinates { get; set; } 
 
         public CharacterBattleData Character { get; set; }
+
+        public bool IsEqualCoordinates(Point coordinates)
+        {
+            return Coordinates.X == coordinates.X && Coordinates.Y == coordinates.Y;
+        }
     }
 }

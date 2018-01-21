@@ -1,14 +1,17 @@
 ﻿@model XORGame.Data.DataTransferEntities.Boardspace
 
-<div id="character-@string.Format("{0}-{1}", Model.Coordinates.X, Model.Coordinates.Y)" class="col">
-    <div class="card text-center rounded-0 board-space">
+<div class="col">
+    <div id="space-@string.Format("{0}-{1}", Model.Coordinates.X, Model.Coordinates.Y)" 
+         class="card text-center rounded-0 board-space">
         <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
-        <div class="card-img-overlay p-1 align-bottom">
+        <div class="card-img-overlay p-1">
             @if (Model.Character != null)
             {
                 var healthPercentage = Math.Ceiling(Model.Character.HealthPercentage);
                 var turnMeterPercentage = Model.Character.IsSelected ? 100 : Math.Ceiling(Model.Character.TurnMeterPercentage);
-                <div class="card character-box @(Model.Character.IsSelected ? "selected-character" : "bg-light") h-100" 
+                <div class="card character-box h-100 
+                     @(Model.Character.IsSelected ? "selected-character" : string.Empty)
+                     @(Model.Character.IsEnemy ? "border-danger" : "border-info")" 
                      data-isEnemy="@Model.Character.IsEnemy.ToString().ToLower()" data-characterid="@Model.Character.ID">
                     <div class="card-body p-1 h-100">
                         <div class="card-text h-75 d-none d-lg-block">@Model.Character.Name</div>
@@ -38,9 +41,7 @@
                             }
                             else
                             {
-                                <div class="text-center">
-                                    <span>DEAD</span>
-                                </div>
+                                <span>DEAD</span>
                             }
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
     var arenaHelperLib = function () {
         var self = this;
-        var targetedCharactterID = 0;
+        var targetedSpaceID = 0;
 
         self.init = init;
         self.performActionURL = null;
@@ -17,14 +17,15 @@
         }
 
         function bindEvents() {
-            $('.character-box').on('click', selection);
+            $('.board-space').on('click', targetSpace);
             $('.btn-ability').on('click', performAction);
         }
 
-        function selection() {
-            $('.character-box').removeClass("targeted-character");
-            $(this).addClass("targeted-character");
-            targetedCharactterID = $(this).data("characterid");        }
+        function targetSpace() {
+            $('.board-space').removeClass("targeted-space");
+            $(this).addClass("targeted-space");
+            targetedSpaceID = $(this).attr("id");
+        }
 
         function performAction() {
             if (!$(this).prop("disabled")) {
@@ -34,8 +35,8 @@
                         {
                             friendlyTeamID: self.friendlyTeamID,
                             enemyTeamID: self.enemyTeamID,
-                            targetCharacterID: targetedCharactterID,
-                            abilityID: abilityID
+                            abilityID: abilityID,
+                            targetedSpaceID: targetedSpaceID
                         },
                         function (result) {
                             $('#board').html(result);
