@@ -19,41 +19,32 @@ namespace XORGame.Areas.Arena.Controllers
         }
 
         [HttpPost]
-        public ActionResult PerformAction(string friendlyTeamID, string enemyTeamID, string targetCharacterID, string abilityID)
+        public ActionResult PerformAction(int friendlyTeamID, int enemyTeamID, int targetCharacterID, int abilityID)
         {
-            if (int.TryParse(friendlyTeamID, out int intFriendlyTeamID) && 
-                int.TryParse(enemyTeamID, out int intEnemyTeamID) &&
-                int.TryParse(targetCharacterID, out int intTargetCharacterID) &&
-                int.TryParse(abilityID, out int intAbilityID))
+            BattleData battleData = EngineCache.GetBattleData(User.Identity.GetUserId(), friendlyTeamID, enemyTeamID);
+            CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
+            CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == targetCharacterID).FirstOrDefault();
+            IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == abilityID);
+
+            if (selectedCharacter != null && targetedCharacter != null && ability != null)
             {
-                BattleData battleData = EngineCache.GetBattleData(User.Identity.GetUserId(), intFriendlyTeamID, intEnemyTeamID);
-                CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-                CharacterBattleData targetedCharacter = battleData.Characters.Where(c => c.ID == intTargetCharacterID).FirstOrDefault();
-                IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == intAbilityID);
-
-                if (selectedCharacter != null && targetedCharacter != null && ability != null)
+                // TODO Add validation that ability action being performed is allowed to prevent cheating.
+                if (ability.IsValidTarget(battleData, targetedCharacter))
                 {
-                    // TODO Add validation that ability action being performed is allowed to prevent cheating.
-                    if (ability.IsValidTarget(battleData, targetedCharacter))
-                    {
-                        ability.AdjustCharacterStats(battleData, targetedCharacter);
-                        BattleEngine.AdvanceTurnMeters(battleData.Characters);
-                        EngineCache.SetBattleData(User.Identity.GetUserId(), battleData);
-                    }
-
-                    return PartialView("_Board", battleData);
+                    ability.AdjustCharacterStats(battleData, targetedCharacter);
+                    BattleEngine.AdvanceTurnMeters(battleData.Characters);
+                    EngineCache.SetBattleData(User.Identity.GetUserId(), battleData);
                 }
             }
 
-            // TODO Redirect to same board state
-            return null;
+            return PartialView("_Board", battleData);
         }
 
         // TEMP
         public ActionResult ResetBattle()
         {
             EngineCache.ClearBattleData(User.Identity.GetUserId());
-            return View("Index", EngineCache.GetBattleData(User.Identity.GetUserId(), 1, 2));
+            return RedirectToAction("Index");
         }
     }
 }
