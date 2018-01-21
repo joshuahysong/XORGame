@@ -1,76 +1,22 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
 @using XORGame.Data.DataTransferEntities;
+@using XORGame.Engines;
 @{ 
     var selectedCharacter = Model.Characters.Where(c => c.IsSelected).FirstOrDefault();
 }
 
 <div class ="row align-items-stretch">
     <div class="col-12 col-md-8">
-        <div class="row no-gutters">
-            @for (var i = 5; i < 10; i++)
-            {
-                if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
+        @for (var y = 0; y < BattleEngine.BoardY; y++)
+        {
+            <div class="row no-gutters">
+                @for (var x = 0; x < BattleEngine.BoardY; x++)
                 {
-                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
+                    @Html.Partial("_Boardspace", Model.Boardspaces
+                        .FirstOrDefault(bs => bs.Coordinates.X == x && bs.Coordinates.Y == y));
                 }
-                else
-                {
-                    @Html.Partial("_CharacterCard", new CharacterBattleData())
-                }
-            }
-        </div>
-        <div class="row no-gutters">
-            @for (var i = 0; i < 5; i++)
-            {
-                if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
-                {
-                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
-                }
-                else
-                {
-                    @Html.Partial("_CharacterCard", new CharacterBattleData())
-                }
-            }
-        </div>
-        <div class="row no-gutters">
-            <div class="col">
-                <div class="card border-0">
-                    <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
-                </div>
             </div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-            <div class="col"></div>
-        </div>
-        <div class="row no-gutters">
-            @for (var i = 0; i < 5; i++)
-            {
-                if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
-                {
-                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
-
-                }
-                else
-                {
-                    @Html.Partial("_CharacterCard", new CharacterBattleData())
-                }
-            }
-        </div>
-        <div class="row no-gutters">
-            @for (var i = 5; i < 10; i++)
-            {
-                if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
-                {
-                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
-
-                }
-                else
-                {
-                    @Html.Partial("_CharacterCard", new CharacterBattleData())
-                }
-            }
-        </div>
+        }
     </div>
     <div class="col-12 col-md-4">
         <div class="card ability-panel h-100 mt-2 mt-md-0">

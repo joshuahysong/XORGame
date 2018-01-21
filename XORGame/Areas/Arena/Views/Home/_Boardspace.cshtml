@@ -1,23 +1,21 @@
-﻿@model XORGame.Data.DataTransferEntities.CharacterBattleData
+﻿@model XORGame.Data.DataTransferEntities.Boardspace
 
-@{
-    var healthPercentage = Math.Ceiling(Model.HealthPercentage);
-    var turnMeterPercentage = Model.IsSelected ? 100 : Math.Ceiling(Model.TurnMeterPercentage);
-}
-
-<div id="character-@Model.ID" class="col">
+<div id="character-@string.Format("{0}-{1}", Model.Coordinates.X, Model.Coordinates.Y)" class="col">
     <div class="card text-center rounded-0 board-space">
         <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
         <div class="card-img-overlay p-1 align-bottom">
-            @if (!string.IsNullOrWhiteSpace(Model.Name))
+            @if (Model.Character != null)
             {
-                <div class="card character-box @(Model.IsSelected ? "selected-character" : "bg-light") h-100" 
-                     data-isEnemy="@Model.IsEnemy.ToString().ToLower()" data-characterid="@Model.ID">
+                var healthPercentage = Math.Ceiling(Model.Character.HealthPercentage);
+                var turnMeterPercentage = Model.Character.IsSelected ? 100 : Math.Ceiling(Model.Character.TurnMeterPercentage);
+                <div class="card character-box @(Model.Character.IsSelected ? "selected-character" : "bg-light") h-100" 
+                     data-isEnemy="@Model.Character.IsEnemy.ToString().ToLower()" data-characterid="@Model.Character.ID">
                     <div class="card-body p-1 h-100">
-                        <div class="card-text h-75 d-none d-lg-block">@Model.Name</div>
-                        <div class="card-text h-75 d-lg-none d-block"></div>
+                        <div class="card-text h-75 d-none d-lg-block">@Model.Character.Name</div>
+                        <div class="card-text h-75 d-none d-lg-none d-sm-block"></div>
+                        <div class="card-text h-50 d-sm-none d-block"></div>
                         <div class="card-text pl-lg-2 pr-lg-2 pt-lg-2 pt-sm-0">
-                            @if (Model.IsAlive())
+                            @if (Model.Character.IsAlive())
                             {
                                 <div class="hp-bar progress">
                                     <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "bg-danger" : "bg-warning" : "bg-success")"
@@ -29,7 +27,7 @@
                                     </div>
                                 </div>
                                 <div class="speed-bar progress text-center">
-                                    <div id="@(Model.ID)-speed-bar" class="progress-bar bg-info"
+                                    <div class="progress-bar bg-info"
                                          style="width: @(turnMeterPercentage.ToString())%;"
                                          role="progressbar"
                                          aria-valuenow=@turnMeterPercentage

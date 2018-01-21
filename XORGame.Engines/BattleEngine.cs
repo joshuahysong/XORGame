@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using XORGame.Data;
 using XORGame.Data.DataTransferEntities;
@@ -8,21 +9,51 @@ namespace XORGame.Engines
 {
     public static class BattleEngine
     {
-        private static int FullTurnMeter = 1000;
+        public const int FullTurnMeter = 1000;
+        public const int BoardX = 5;
+        public const int BoardY = 5;
 
         public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
         {
+            BattleData battleData = new BattleData();
+            GenerateBoard(battleData);
+
             List<CharacterBattleData> characters = new List<CharacterBattleData>();
             characters.AddRange(Manager.GetCharactersByTeamID(friendlyTeamID, false));
             characters.AddRange(Manager.GetCharactersByTeamID(enemyTeamID, true));
-            AdvanceTurnMeters(characters);
-            return new BattleData
+            PopulateBoard(battleData, characters);
+
+            AdvanceTurnMeters(battleData.Characters);
+
+            return battleData;
+        }
+
+        private static void GenerateBoard(BattleData battleData)
+        {
+            battleData.Boardspaces = new List<Boardspace>();
+            for (int y = 0; y < BoardX; y++)
             {
-                Characters = characters,
-                FriendlyTeamID = friendlyTeamID,
-                EnemyTeamID = enemyTeamID,
-                CombatLog = new List<string>()                
-            };
+                for (int x = 0; x < BoardY; x++)
+                {
+                    battleData.Boardspaces.Add(new Boardspace
+                    {
+                        Coordinates = new Point(x, y),
+                        Character = null
+                    });
+                }
+            }
+        }
+
+        private static void PopulateBoard(BattleData battleData, List<CharacterBattleData> characters)
+        {
+            characters.ForEach(character => character.CalcuateStartingCoordinates());
+
+            battleData.Boardspaces.ForEach(boardSpace =>
+            {
+                boardSpace.Character = characters.FirstOrDefault(character =>
+                    character.Coordinates.X == boardSpace.Coordinates.X &&
+                    character.Coordinates.Y == boardSpace.Coordinates.Y);
+            });
         }
 
         public static void AdvanceTurnMeters(List<CharacterBattleData> characters)

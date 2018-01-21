@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="Contracts\IAbilityAction.cs" />
     <Compile Include="Contracts\AbilityActionBase.cs" />
     <Compile Include="DataTransferEntities\BattleData.cs" />
+    <Compile Include="DataTransferEntities\Boardspace.cs" />
     <Compile Include="DataTransferEntities\CharacterBattleData.cs" />
     <Compile Include="Contracts\IAttack.cs" />
     <Compile Include="Player.cs" />
