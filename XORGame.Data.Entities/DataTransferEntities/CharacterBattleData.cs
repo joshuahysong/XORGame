@@ -37,7 +37,7 @@ namespace XORGame.Data.DataTransferEntities
         {
             get
             {
-                return (Convert.ToDecimal(CurrentHealth) / Convert.ToDecimal(TotalHealth)) * 100;
+                return TotalHealth > 0 ? (Convert.ToDecimal(CurrentHealth) / Convert.ToDecimal(TotalHealth)) * 100 : 1;
             }
         }
 
