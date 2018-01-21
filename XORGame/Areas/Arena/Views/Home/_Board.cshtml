@@ -1,144 +1,182 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
+@using XORGame.Data.DataTransferEntities;
 @{ 
     var selectedCharacter = Model.Characters.Where(c => c.IsSelected).FirstOrDefault();
 }
 
-<div class ="row equal">
-    <div class="col-md-8">
-        <div class="row flex-align-center">
+<div class ="row align-items-stretch">
+    <div class="col-12 col-md-8">
+        <div class="row no-gutters">
             @for (var i = 5; i < 10; i++)
             {
                 if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
                 {
-                    <div class="board-space">
-                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
-                    </div>
+                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
                 }
                 else
                 {
-                    <div class="board-space">
-                        &nbsp;
-                    </div>
+                    @Html.Partial("_CharacterCard", new CharacterBattleData())
                 }
             }
         </div>
-        <div class="row flex-align-center">
+        <div class="row no-gutters">
             @for (var i = 0; i < 5; i++)
             {
                 if (Model.Characters.Any(c => c.IsEnemy && c.Location == i))
                 {
-                    <div class="board-space">
-                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
-                    </div>
+                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => c.IsEnemy && c.Location == i).FirstOrDefault())
                 }
                 else
                 {
-                    <div class="board-space">
-                        &nbsp;
-                    </div>
+                    @Html.Partial("_CharacterCard", new CharacterBattleData())
                 }
             }
         </div>
-        <div class="row team-separator">
-            <div class="col-sm-12">
+        <div class="row no-gutters">
+            <div class="col">
+                <div class="card border-0">
+                    <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
+                </div>
             </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
         </div>
-        <div class="row flex-align-center">
+        <div class="row no-gutters">
             @for (var i = 0; i < 5; i++)
             {
                 if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
                 {
-                    <div class="board-space">
-                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
-                    </div>
+                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
+
                 }
                 else
                 {
-                    <div class="board-space">
-                        &nbsp;
-                    </div>
+                    @Html.Partial("_CharacterCard", new CharacterBattleData())
                 }
             }
         </div>
-        <div class="row flex-align-center">
+        <div class="row no-gutters">
             @for (var i = 5; i < 10; i++)
             {
                 if (Model.Characters.Any(c => !c.IsEnemy && c.Location == i))
                 {
-                    <div class="board-space">
-                        @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
-                    </div>
+                    @Html.Partial("_CharacterCard", Model.Characters.Where(c => !c.IsEnemy && c.Location == i).FirstOrDefault())
+
                 }
                 else
                 {
-                    <div class="board-space">
-                        &nbsp;
-                    </div>
+                    @Html.Partial("_CharacterCard", new CharacterBattleData())
                 }
             }
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="panel panel-default panel-body ability-panel">
-            <label>@selectedCharacter.Name</label>
-            <hr />
-            @foreach (var ability in selectedCharacter.Abilities)
-            {
-                <div class="row ability-row">
-                    <div class="col-md-9 ability-column">
-                        <div class="btn-group btn-group-justified btn-ability-group" role="group">
+    <div class="col-12 col-md-4">
+        <div class="card ability-panel h-100 mt-2 mt-md-0">
+            <div class="card-body">
+                <h4 class="card-title">@selectedCharacter.Name</h4>
+                <hr />
+                @foreach (var ability in selectedCharacter.Abilities)
+                {
+                    <div class="row mb-2">
+                        <div class="col-md-8 col-lg-10 col-10 pr-0">
+                            <div class="btn-group btn-block" role="group">
                             @if (ability.IsOnCooldown())
                             {
-                                <div class="btn-group btn-ability-cooldown" role="group">
-                                    <button class="btn btn-default">@ability.CurrentCooldown</button>
-                                </div>
+                                <button class="btn btn-secondary" disabled="disabled">@ability.CurrentCooldown</button>
                             }
-                            <div class="btn-group btn-ability" role="group" data-abilityid="@ability.ID">
                             @switch (ability.Type)
                             {
                                 case "Ranged":
-                                    <button class="btn btn-danger" @(ability.IsOnCooldown() ? "disabled=disabled" : string.Empty)><div class="text-left">
-                                        <span class="glyphicon glyphicon-screenshot"></span> &nbsp;@ability.Name</div>
+                                    <button class="btn btn-danger btn-ability btn-block" 
+                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty) 
+                                            data-abilityid="@ability.ID">
+                                        <div class="text-left d-md-none d-lg-block"><i class="fas fa-bullseye"></i>&nbsp;@ability.Name</div>
+                                        <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-bullseye"></i></div>
                                     </button>
                                     break;
                                 case "Melee":
-                                    <button class="btn btn-danger" @(ability.IsOnCooldown() ? "disabled='disabled'" : string.Empty)><div class="text-left">                                
-                                        <i class="fas fa-hand-rock"></i>&nbsp;@ability.Name</div>
+                                    <button class="btn btn-danger btn-ability btn-block"
+                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID">
+                                        <div class="text-left d-md-none d-lg-block"><i class="fas fa-hand-rock"></i>&nbsp;@ability.Name</div>
+                                        <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-bullseye"></i></div>
                                     </button>
                                     break;
                                 case "Heal":
-                                    <button class="btn btn-success" @(ability.IsOnCooldown() ? "disabled='disabled'" : string.Empty)>
-                                        <div class="text-left">                                
-                                        <i class="fas fa-heart"></i>&nbsp;@ability.Name</div>
+                                    <button class="btn btn-success btn-ability btn-block"
+                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID">
+                                        <div class="text-left d-md-none d-lg-block"><i class="fas fa-heart"></i>&nbsp;@ability.Name</div>
+                                        <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-bullseye"></i></div>
                                     </button>
                                     break;
                             }
                             </div>
                         </div>
+                        <div class="col-2 pl-2">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-info"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3 ability-column-info">
-                        <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
-                    </div>
+                    @*<div class="row ability-row">
+                        <div class="col-md-9 ability-column">
+                            <div class="btn-group btn-group-justified btn-ability-group" role="group">
+                                @if (ability.IsOnCooldown())
+                                {
+                                    <div class="btn-group btn-ability-cooldown" role="group">
+                                        <button class="btn btn-default">@ability.CurrentCooldown</button>
+                                    </div>
+                                }
+                                <div class="btn-group btn-ability" role="group" data-abilityid="@ability.ID">
+                                @switch (ability.Type)
+                                {
+                                    case "Ranged":
+                                        <button class="btn btn-danger" @(ability.IsOnCooldown() ? "disabled=disabled" : string.Empty)><div class="text-left">
+                                            <span class="glyphicon glyphicon-screenshot"></span> &nbsp;@ability.Name</div>
+                                        </button>
+                                        break;
+                                    case "Melee":
+                                        <button class="btn btn-danger" @(ability.IsOnCooldown() ? "disabled='disabled'" : string.Empty)><div class="text-left">                                
+                                            <i class="fas fa-hand-rock"></i>&nbsp;@ability.Name</div>
+                                        </button>
+                                        break;
+                                    case "Heal":
+                                        <button class="btn btn-success" @(ability.IsOnCooldown() ? "disabled='disabled'" : string.Empty)>
+                                            <div class="text-left">                                
+                                            <i class="fas fa-heart"></i>&nbsp;@ability.Name</div>
+                                        </button>
+                                        break;
+                                }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ability-column-info">
+                            <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
+                        </div>
+                    </div>*@
+                }
+                <hr />
+                <div class="row">
+                    <div class="col"><label>HP</label></div>
+                    <div class="col">@selectedCharacter.CurrentHealth / @selectedCharacter.TotalHealth</div>
                 </div>
-            }
-            <hr />
-            <div class="row">
-                <div class="col-xs-6"><label>HP</label></div>
-                <div class="col-xs-6">@selectedCharacter.CurrentHealth / @selectedCharacter.TotalHealth</div>
+                <div class="row">
+                    <div class="col"><label>Attack</label></div>
+                    <div class="col">@selectedCharacter.Attack</div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Defense</label></div>
+                    <div class="col">@selectedCharacter.Defense</div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Speed</label></div>
+                    <div class="col">@selectedCharacter.Speed</div>
+                </div>
+                <hr />
             </div>
-            <div class="row">
-                <div class="col-xs-6"><label>Attack</label></div>
-                <div class="col-xs-6">@selectedCharacter.Attack</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6"><label>Defense</label></div>
-                <div class="col-xs-6">@selectedCharacter.Defense</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6"><label>Speed</label></div>
-                <div class="col-xs-6">@selectedCharacter.Speed</div>
-            </div>
-            <hr />
         </div>
     </div>
 </div>

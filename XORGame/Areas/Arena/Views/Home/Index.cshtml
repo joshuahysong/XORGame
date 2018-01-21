@@ -19,16 +19,16 @@
     </script>
 }
 
-<div class="panel panel-default">
-    <div id="board" class="panel-body">
+<div class="card mb-3">
+    <div id="board" class="card-body">
         @Html.Partial("_Board")
     </div>
 </div>
-<div class="panel panel-default">
-    <div id="devtools" class="panel-heading">
+<div class="card">
+    <div id="devtools" class="card-header">
         Dev Tools
     </div>
-    <div class="panel-body">
-        @Html.ActionLink("Reset Battle", "ResetBattle", "Home", null, new { @class = "btn btn-default" })
+    <div class="card-body">
+        @Html.ActionLink("Reset Battle", "ResetBattle", "Home", null, new { @class = "card-link" })
     </div>
 </div>

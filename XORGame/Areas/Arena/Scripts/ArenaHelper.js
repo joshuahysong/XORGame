@@ -27,7 +27,7 @@
             targetedCharactterID = $(this).data("characterid");        }
 
         function performAction() {
-            if (!$(this).children(':first').prop("disabled")) {
+            if (!$(this).prop("disabled")) {
                 var abilityID = $(this).data("abilityid");
                 if (abilityID) {
                     $.post(self.performActionURL,
