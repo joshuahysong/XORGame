@@ -15,8 +15,7 @@
                      data-isEnemy="@Model.Character.IsEnemy.ToString().ToLower()" data-characterid="@Model.Character.ID">
                     <div class="card-body p-1 h-100">
                         <div class="card-text h-75 d-none d-lg-block">@Model.Character.Name</div>
-                        <div class="card-text h-75 d-none d-lg-none d-sm-block"></div>
-                        <div class="card-text h-50 d-sm-none d-block"></div>
+                        <div class="card-text h-75 d-lg-none d-block"></div>
                         <div class="card-text pl-lg-2 pr-lg-2 pt-lg-2 pt-sm-0">
                             @if (Model.Character.IsAlive())
                             {

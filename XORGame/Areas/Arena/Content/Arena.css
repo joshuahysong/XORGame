@@ -7,12 +7,12 @@
 }
 
 .hp-bar {
-    height: 10px;
+    height: 8px;
     margin-bottom: 2px;
 }
 
 .speed-bar {
-    height: 5px;
+    height: 3px;
 }
 
 .selected-character {
