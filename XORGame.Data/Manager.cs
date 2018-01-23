@@ -28,7 +28,9 @@ namespace XORGame.Data
                     Speed = roster.PlayerCharacter.Speed,
                     Location = roster.Location,
                     IsEnemy = IsEnemyTeam,
-                    Abilities = GetBattleAbilities(roster.PlayerCharacter)
+                    Abilities = GetBattleAbilities(roster.PlayerCharacter),
+                    SpritesPath = roster.PlayerCharacter.Character.SpritesPath,
+                    Facing = IsEnemyTeam ? "S" : "N"//TODO TEMP. Use Enum.
                 });
             });
             return characters;

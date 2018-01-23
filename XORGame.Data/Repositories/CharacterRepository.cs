@@ -11,7 +11,7 @@ namespace XORGame.Data
         {
             using (XORGameContext db = new XORGameContext())
             {
-                return db.TeamRosters.Include(x => x.PlayerCharacter).Include(x => x.Team).Where(tr => tr.TeamID == teamID).ToList();
+                return db.TeamRosters.Include(x => x.PlayerCharacter.Character).Include(x => x.Team).Where(tr => tr.TeamID == teamID).ToList();
             }
         }
 

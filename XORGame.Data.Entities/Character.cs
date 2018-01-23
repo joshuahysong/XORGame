@@ -16,6 +16,7 @@ namespace XORGame.Data.Entities
         public int Defense { get; set; }
         public int Speed { get; set; }
         public string Description { get; set; }
+        public string SpritesPath { get; set; }
 
         public virtual ICollection<PlayerCharacter> PlayerCharacters { get; set; }
     }

@@ -4,19 +4,23 @@
     <div id="space-@string.Format("{0}-{1}", Model.Coordinates.X, Model.Coordinates.Y)" 
          class="card text-center rounded-0 board-space">
         <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
+        @*<img class="card-img" src="~/Content/Images/test.png" />*@
         <div class="card-img-overlay p-1">
             @if (Model.Character != null)
             {
                 var healthPercentage = Math.Ceiling(Model.Character.HealthPercentage);
                 var turnMeterPercentage = Model.Character.IsSelected ? 100 : Math.Ceiling(Model.Character.TurnMeterPercentage);
                 <div class="card character-box h-100 
-                     @(Model.Character.IsSelected ? "selected-character" : string.Empty)
+                     @(Model.Character.IsSelected ? "selected-character" : "bg-light")
                      @(Model.Character.IsEnemy ? "border-danger" : "border-info")" 
                      data-isEnemy="@Model.Character.IsEnemy.ToString().ToLower()" data-characterid="@Model.Character.ID">
-                    <div class="card-body p-1 h-100">
-                        <div class="card-text h-75 d-none d-lg-block">@Model.Character.Name</div>
-                        <div class="card-text h-75 d-lg-none d-block"></div>
-                        <div class="card-text pl-lg-2 pr-lg-2 pt-lg-2 pt-sm-0">
+                    <div class="card-body p-1">
+                        @*<div class="card-text h-75 d-none d-lg-block">@Model.Character.Name</div>*@
+                        @*<div class="card-text h-75 d-lg-none d-block"></div>*@
+                        @*<div class="card-text h-75"></div>*@
+                        <img class="card-img pl-2 pr-2 pt-3 pl-lg-3 pr-lg-3 pt-lg-4 pb-0" 
+                             src="@string.Format("{0}/{1}.png", Model.Character.SpritesPath, Model.Character.Facing)" />
+                        <div class="card-img-overlay m-lg-2 m-1 p-0">
                             @if (Model.Character.IsAlive())
                             {
                                 <div class="hp-bar progress">
