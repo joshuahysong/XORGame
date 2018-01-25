@@ -1,16 +1,15 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
-@using XORGame.Data.DataTransferEntities;
-@using XORGame.Engines;
+@using XORGame.Data.Entities;
 @{ 
     var selectedCharacter = Model.Characters.Where(c => c.IsSelected).FirstOrDefault();
 }
 
 <div class ="row align-items-stretch">
     <div class="col-12 col-md-8">
-        @for (var y = 0; y < BattleEngine.BoardY; y++)
+        @for (var y = 0; y < Constants.BoardY; y++)
         {
             <div class="row no-gutters">
-                @for (var x = 0; x < BattleEngine.BoardY; x++)
+                @for (var x = 0; x < Constants.BoardY; x++)
                 {
                     @Html.Partial("_Boardspace", Model.Boardspaces
                         .FirstOrDefault(bs => bs.IsEqualCoordinates(new System.Drawing.Point(x, y))));
@@ -23,7 +22,7 @@
             <div class="card-body">
                 <h4 class="card-title">@selectedCharacter.Name</h4>
                 <hr />
-                @foreach (var ability in selectedCharacter.Abilities)
+                @foreach (var ability in selectedCharacter.Abilities.OrderBy(a => (a.Name == "Move" ? 0 : 1)).ThenBy(a => a.Name))
                 {
                     <div class="row mb-2">
                         <div class="col-md-8 col-lg-10 col-10 pr-0">
@@ -56,6 +55,14 @@
                                             data-abilityid="@ability.ID">
                                         <div class="text-left d-md-none d-lg-block"><i class="fas fa-heart"></i>&nbsp;@ability.Name</div>
                                         <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-heart"></i></div>
+                                    </button>
+                                    break;
+                                case "Move":
+                                    <button class="btn btn-primary btn-ability btn-block"
+                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID">
+                                        <div class="text-left d-md-none d-lg-block"><i class="fas fa-arrows-alt"></i>&nbsp;@ability.Name</div>
+                                        <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-arrows-alt"></i></div>
                                     </button>
                                     break;
                             }
