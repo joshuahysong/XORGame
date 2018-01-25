@@ -12,7 +12,7 @@ namespace XORGame.Engines
         public const int FullTurnMeter = 1000;
         public const int BoardX = 5;
         public const int BoardY = 5;
-
+        
         public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
         {
             BattleData battleData = new BattleData();
