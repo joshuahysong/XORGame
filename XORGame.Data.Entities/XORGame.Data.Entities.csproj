@@ -49,6 +49,7 @@
     <Compile Include="Abilities\RangedAttack.cs" />
     <Compile Include="Ability.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Constants\CharacterFacing.cs" />
     <Compile Include="Contracts\IAbilityAction.cs" />
     <Compile Include="Contracts\AbilityActionBase.cs" />
     <Compile Include="DataTransferEntities\BattleData.cs" />
@@ -62,5 +63,6 @@
     <Compile Include="Team.cs" />
     <Compile Include="TeamRoster.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

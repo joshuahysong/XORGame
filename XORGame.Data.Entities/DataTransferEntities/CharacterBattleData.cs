@@ -26,7 +26,11 @@ namespace XORGame.Data.DataTransferEntities
 
         public int Location { get; set; }
 
+        public string SpritesPath { get; set; }
+
         public Point Coordinates { get; set; }
+
+        public string Facing { get; set; }
 
         public int TurnMeter { get; set; }
 

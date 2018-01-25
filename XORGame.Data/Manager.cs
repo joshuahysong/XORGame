@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using XORGame.Data.DataTransferEntities;
 using XORGame.Data.Entities;
+using XORGame.Data.Entities.Constants;
 using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data
@@ -28,7 +29,9 @@ namespace XORGame.Data
                     Speed = roster.PlayerCharacter.Speed,
                     Location = roster.Location,
                     IsEnemy = IsEnemyTeam,
-                    Abilities = GetBattleAbilities(roster.PlayerCharacter)
+                    Abilities = GetBattleAbilities(roster.PlayerCharacter),
+                    SpritesPath = roster.PlayerCharacter.Character.SpritesPath,
+                    Facing = IsEnemyTeam ? CharacterFacing.South : CharacterFacing.North
                 });
             });
             return characters;

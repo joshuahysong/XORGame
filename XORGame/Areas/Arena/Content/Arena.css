@@ -27,3 +27,17 @@
 .enemy-character {
     background-color: #ffe6e6;
 }
+
+.test {
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative;
+}
+
+.test2 {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
