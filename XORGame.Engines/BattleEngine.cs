@@ -4,14 +4,12 @@ using System.Drawing;
 using System.Linq;
 using XORGame.Data;
 using XORGame.Data.DataTransferEntities;
+using XORGame.Data.Entities;
 
 namespace XORGame.Engines
 {
     public static class BattleEngine
     {
-        public const int FullTurnMeter = 1000;
-        public const int BoardX = 5;
-        public const int BoardY = 5;
         
         public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
         {
@@ -31,9 +29,9 @@ namespace XORGame.Engines
         private static void GenerateBoard(BattleData battleData)
         {
             battleData.Boardspaces = new List<Boardspace>();
-            for (int y = 0; y < BoardX; y++)
+            for (int y = 0; y < Constants.BoardX; y++)
             {
-                for (int x = 0; x < BoardY; x++)
+                for (int x = 0; x < Constants.BoardY; x++)
                 {
                     battleData.Boardspaces.Add(new Boardspace
                     {
@@ -77,12 +75,12 @@ namespace XORGame.Engines
         private static List<CharacterBattleData> CheckForReadyCharacters(List<CharacterBattleData> characters)
         {
             int maxSpeed = characters.Where(character => character.CurrentHealth > 0 &&
-                character.TurnMeter >= FullTurnMeter).Any() ? characters.Where(character => character.CurrentHealth > 0 &&
-                character.TurnMeter >= FullTurnMeter).Max(c => c.Speed) : 0;
+                character.TurnMeter >= Constants.FullTurnMeter).Any() ? characters.Where(character => character.CurrentHealth > 0 &&
+                character.TurnMeter >= Constants.FullTurnMeter).Max(c => c.Speed) : 0;
 
             return characters
                 .Where(character => character.CurrentHealth > 0 &&
-                    character.TurnMeter >= FullTurnMeter &&
+                    character.TurnMeter >= Constants.FullTurnMeter &&
                     character.Speed == maxSpeed).ToList();
         }
 

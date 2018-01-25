@@ -2,7 +2,7 @@
 
     var arenaHelperLib = function () {
         var self = this;
-        var targetedSpaceID = 0;
+        var targetedSpaceID = null;
 
         self.init = init;
         self.performActionURL = null;
@@ -17,6 +17,7 @@
         }
 
         function bindEvents() {
+            targetedSpaceID = null;
             $('.board-space').on('click', targetSpace);
             $('.btn-ability').on('click', performAction);
         }
