@@ -44,13 +44,26 @@ namespace XORGame.Engines
 
         private static void PopulateBoard(BattleData battleData, List<CharacterBattleData> characters)
         {
-            characters.ForEach(character => character.CalcuateStartingCoordinates());
-
-            battleData.Boardspaces.ForEach(boardSpace =>
+            characters.ForEach(character =>
             {
-                boardSpace.Character = characters.FirstOrDefault(character =>
-                    boardSpace.IsEqualCoordinates(character.Coordinates));
+                Point? characterLocation = character.GetStartingCoordinates();
+                if (characterLocation != null)
+                {
+                    Boardspace characterSpace = battleData.Boardspaces.FirstOrDefault(boardspace => (Point?)boardspace.Coordinates == characterLocation);
+                    if (characterSpace != null)
+                    {
+                        characterSpace.Character = character;
+                    }
+                }
             });
+
+            //characters.ForEach(character => character.CalcuateStartingCoordinates());
+
+            //battleData.Boardspaces.ForEach(boardSpace =>
+            //{
+            //    boardSpace.Character = characters.FirstOrDefault(character =>
+            //        boardSpace.IsEqualCoordinates((Point)character.Coordinates));
+            //});
         }
 
         public static void AdvanceTurnMeters(BattleData battleData)

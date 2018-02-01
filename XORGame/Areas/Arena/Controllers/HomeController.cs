@@ -29,8 +29,7 @@ namespace XORGame.Areas.Arena.Controllers
                 int.TryParse(targetCoordinates[2], out int targetY))
             {
                 CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-                Boardspace targetedSpace = battleData.Boardspaces
-                    .FirstOrDefault(bs => bs.IsEqualCoordinates(new Point(targetX, targetY)));
+                Boardspace targetedSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.IsEqualCoordinates(new Point(targetX, targetY)));
                 IAbilityAction ability = selectedCharacter.Abilities.FirstOrDefault(a => a.ID == abilityID);
 
                 if (selectedCharacter != null && targetedSpace != null && ability != null)

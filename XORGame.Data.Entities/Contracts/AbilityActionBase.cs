@@ -42,7 +42,7 @@ namespace XORGame.Data.Entities.Contracts
             return CurrentCooldown > 0;
         }
 
-        public static int GetDamageModifier(int attack, int defense)
+        public int GetDamageModifier(int attack, int defense)
         {
             return ((attack - defense) / 10) + 1;
         }

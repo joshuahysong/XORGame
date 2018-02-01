@@ -16,7 +16,7 @@ namespace XORGame.Data.Entities.Abilities
         public bool IsValidTarget(BattleData battleData, Boardspace targetSpace)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.FirstOrDefault(c => c.IsSelected);
-            Boardspace selectedCharacterSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.IsEqualCoordinates(selectedCharacter.Coordinates));
+            Boardspace selectedCharacterSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.Character?.ID == selectedCharacter.ID);
             return (selectedCharacter != null &&
                 selectedCharacterSpace != null &&
                 !IsOnCooldown() &&
@@ -28,11 +28,10 @@ namespace XORGame.Data.Entities.Abilities
         public void AdjustCharacterStats(BattleData battleData, Boardspace targetSpace)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.FirstOrDefault(c => c.IsSelected);
-            Boardspace currentSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.IsEqualCoordinates(selectedCharacter.Coordinates));
+            Boardspace currentSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.Character?.ID == selectedCharacter.ID);
             if (currentSpace != null)
             {
                 currentSpace.Character = null;
-                selectedCharacter.Coordinates = targetSpace.Coordinates;
                 targetSpace.Character = selectedCharacter;
                 StartCooldown();
             }

@@ -21,7 +21,7 @@ namespace XORGame.Data.Entities.Abilities
         public bool IsValidTarget(BattleData battleData, Boardspace targetSpace)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-            Boardspace selectedCharacterSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.IsEqualCoordinates(selectedCharacter.Coordinates));
+            Boardspace selectedCharacterSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.Character?.ID == selectedCharacter.ID);
             return (selectedCharacter != null &&
                 selectedCharacterSpace != null &&
                 targetSpace.Character != null &&
@@ -38,6 +38,10 @@ namespace XORGame.Data.Entities.Abilities
             int damage = GetDamageModifier(selectedCharacter.Attack, targetSpace.Character.Defense) + BaseDamage;
             int newHealth = targetSpace.Character.CurrentHealth - (damage < 0 ? 0 : damage);
             targetSpace.Character.CurrentHealth = newHealth < 0 ? 0 : newHealth;
+            if (targetSpace.Character.CurrentHealth <= 0)
+            {
+                targetSpace.Character = null;
+            }
         }
     }
 }
