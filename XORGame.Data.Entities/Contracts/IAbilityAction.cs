@@ -1,4 +1,6 @@
-﻿using XORGame.Data.DataTransferEntities;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using XORGame.Data.DataTransferEntities;
 
 namespace XORGame.Data.Entities.Contracts
 {
@@ -17,6 +19,8 @@ namespace XORGame.Data.Entities.Contracts
         string Description { get; set; }
 
         int CurrentCooldown { get; set; }
+
+        List<Point> ValidTargets { get; set; }
 
         bool IsOnCooldown();
 

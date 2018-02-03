@@ -1,4 +1,6 @@
-﻿using XORGame.Data.DataTransferEntities;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using XORGame.Data.DataTransferEntities;
 using XORGame.Data.Entities;
 
 namespace XORGame.Data.Entities.Contracts
@@ -19,6 +21,8 @@ namespace XORGame.Data.Entities.Contracts
 
         public int CurrentCooldown { get; set; }
 
+        public List<Point> ValidTargets { get; set; }
+
         public AbilityActionBase(Ability ability)
         {
             ID = ability.ID;
@@ -28,6 +32,7 @@ namespace XORGame.Data.Entities.Contracts
             Cooldown = ability.Cooldown;
             Description = ability.Description;
             CurrentCooldown = 0;
+            ValidTargets = new List<Point>();
         }
 
         public void StartCooldown()

@@ -1,4 +1,5 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
+@using Newtonsoft.Json;
 @using XORGame.Data.Entities;
 @{ 
     var selectedCharacter = Model.Characters.Where(c => c.IsSelected).FirstOrDefault();
@@ -6,16 +7,22 @@
 
 <div class ="row align-items-stretch">
     <div class="col-12 col-md-8">
-        @for (var y = 0; y < Constants.BoardY; y++)
-        {
-            <div class="row no-gutters">
-                @for (var x = 0; x < Constants.BoardY; x++)
+        <div class="row">
+            <div class="col-sm-1 col-12">@*TODO Dead friendlies here*@</div>
+            <div class="col-sm-10 col-12">
+                @for (var y = 0; y < Constants.BoardY; y++)
                 {
-                    @Html.Partial("_Boardspace", Model.Boardspaces
-                        .FirstOrDefault(bs => bs.IsEqualCoordinates(new System.Drawing.Point(x, y))));
+                    <div class="row no-gutters" style="max-height: 130px;">
+                        @for (var x = 0; x < Constants.BoardY; x++)
+                        {
+                            @Html.Partial("_Boardspace", Model.Boardspaces
+                                .FirstOrDefault(bs => bs.IsEqualCoordinates(new System.Drawing.Point(x, y))));
+                        }
+                    </div>
                 }
             </div>
-        }
+            <div class="col-sm-1 col-12">@*TODO Dead enemies here*@</div>
+        </div>
     </div>
     <div class="col-12 col-md-4">
         <div class="card ability-panel h-100 mt-2 mt-md-0">
@@ -24,8 +31,12 @@
                 <hr />
                 @foreach (var ability in selectedCharacter.Abilities.OrderBy(a => (a.Name == "Move" ? 0 : 1)).ThenBy(a => a.Name))
                 {
-                    <div class="row mb-2">
-                        <div class="col-md-8 col-lg-10 col-10 pr-0">
+                    var validTargets = Html.Raw(JsonConvert.SerializeObject(ability.ValidTargets));
+                    <div class="row mb-2 h-100">
+                        <div class="col-1">
+                            <span id="select-arrow-@ability.ID" class="selected-ability align-middle h-100 text-hide"><i class="fas fa-caret-right"></i></span>
+                        </div>
+                        <div class="col-md-6 col-lg-8 col-8 pr-0 pl-0">
                             <div class="btn-group btn-block" role="group">
                             @if (ability.IsOnCooldown())
                             {
@@ -35,32 +46,38 @@
                             {
                                 case "Ranged":
                                     <button class="btn btn-danger btn-ability btn-block" 
-                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty) 
-                                            data-abilityid="@ability.ID">
-                                        <div class="text-left d-md-none d-lg-block"><i class="fas fa-bullseye"></i>&nbsp;@ability.Name</div>
+                                            @(ability.IsOnCooldown() || ability.ValidTargets.Count == 0 ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID"
+                                            data-validtargets='@validTargets'>
+                                        <div class="text-left d-md-none d-lg-block">
+                                            <i class="fas fa-bullseye"></i>&nbsp;@ability.Name
+                                        </div>
                                         <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-bullseye"></i></div>
                                     </button>
                                     break;
                                 case "Melee":
                                     <button class="btn btn-danger btn-ability btn-block"
-                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
-                                            data-abilityid="@ability.ID">
+                                            @(ability.IsOnCooldown() || ability.ValidTargets.Count == 0 ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID"
+                                            data-validtargets='@validTargets'>
                                         <div class="text-left d-md-none d-lg-block"><i class="fas fa-hand-rock"></i>&nbsp;@ability.Name</div>
                                         <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-hand-rock"></i></div>
                                     </button>
                                     break;
                                 case "Heal":
                                     <button class="btn btn-success btn-ability btn-block"
-                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
-                                            data-abilityid="@ability.ID">
+                                            @(ability.IsOnCooldown() || ability.ValidTargets.Count == 0 ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID"
+                                            data-validtargets='@validTargets'>
                                         <div class="text-left d-md-none d-lg-block"><i class="fas fa-heart"></i>&nbsp;@ability.Name</div>
                                         <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-heart"></i></div>
                                     </button>
                                     break;
                                 case "Move":
                                     <button class="btn btn-primary btn-ability btn-block"
-                                            @(ability.IsOnCooldown() ? "disabled" : string.Empty)
-                                            data-abilityid="@ability.ID">
+                                            @(ability.IsOnCooldown() || ability.ValidTargets.Count == 0 ? "disabled" : string.Empty)
+                                            data-abilityid="@ability.ID"
+                                            data-validtargets='@validTargets'>
                                         <div class="text-left d-md-none d-lg-block"><i class="fas fa-arrows-alt"></i>&nbsp;@ability.Name</div>
                                         <div class="text-left d-none d-lg-none d-md-block"><i class="fas fa-arrows-alt"></i></div>
                                     </button>
