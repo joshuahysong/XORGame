@@ -9,8 +9,7 @@ using XORGame.Data.Entities;
 namespace XORGame.Engines
 {
     public static class BattleEngine
-    {
-        
+    {        
         public static BattleData GenerateBattleData(int friendlyTeamID, int enemyTeamID)
         {
             BattleData battleData = new BattleData();
@@ -49,21 +48,14 @@ namespace XORGame.Engines
                 Point? characterLocation = character.GetStartingCoordinates();
                 if (characterLocation != null)
                 {
-                    Boardspace characterSpace = battleData.Boardspaces.FirstOrDefault(boardspace => (Point?)boardspace.Coordinates == characterLocation);
+                    Boardspace characterSpace = battleData.Boardspaces
+                        .FirstOrDefault(boardspace => (Point?)boardspace.Coordinates == characterLocation);
                     if (characterSpace != null)
                     {
                         characterSpace.Character = character;
                     }
                 }
             });
-
-            //characters.ForEach(character => character.CalcuateStartingCoordinates());
-
-            //battleData.Boardspaces.ForEach(boardSpace =>
-            //{
-            //    boardSpace.Character = characters.FirstOrDefault(character =>
-            //        boardSpace.IsEqualCoordinates((Point)character.Coordinates));
-            //});
         }
 
         public static void AdvanceTurnMeters(BattleData battleData)
@@ -79,10 +71,11 @@ namespace XORGame.Engines
                 readyCharacters = CheckForReadyCharacters(battleData.Characters);
             }
 
+            ResetCharacters(battleData);
+
             // Select a random readyCharacter
-            battleData.Characters.ForEach(c => { c.IsSelected = false; });
             CharacterBattleData nextCharacter = readyCharacters[new Random().Next(0, readyCharacters.Count)];
-            SetCharacterReady(nextCharacter);
+            SetCharacterReady(battleData, nextCharacter);
         }
 
         private static List<CharacterBattleData> CheckForReadyCharacters(List<CharacterBattleData> characters)
@@ -97,13 +90,27 @@ namespace XORGame.Engines
                     character.Speed == maxSpeed).ToList();
         }
 
-        private static void SetCharacterReady(CharacterBattleData character)
+        private static void SetCharacterReady(BattleData battleData, CharacterBattleData character)
         {
             character.TurnMeter = 0;
             character.IsSelected = true;
             character.Abilities.ForEach(ability =>
             {
                 ability.CurrentCooldown = ability.CurrentCooldown > 0 ? ability.CurrentCooldown - 1 : 0;
+                ability.ValidTargets.AddRange(battleData.Boardspaces
+                    .Where(boardspace => ability.IsValidTarget(battleData, boardspace))
+                    .Select(bs => bs.Coordinates).ToList());
+            });
+        }
+
+        private static void ResetCharacters(BattleData battleData)
+        {
+            battleData.Characters.ForEach(c => {
+                c.IsSelected = false;
+                c.Abilities.ForEach(a =>
+                {
+                    a.ValidTargets = new List<Point>();
+                });
             });
         }
     }

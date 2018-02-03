@@ -1,5 +1,7 @@
 ﻿.board-space {
     border-style: dotted;
+    max-height: 130px;
+    max-width: 130px;
 }
 
 .team-separator {
@@ -16,28 +18,23 @@
 }
 
 .selected-character {
-    background-color: #ffff99;
+    background-color: #ffff50;
 }
 
 .targeted-space {
-    border: blue solid 1px;
-    background-color: azure;
+    border: blue dotted 1px;
+    background-color: lightcyan;
 }
 
 .enemy-character {
     background-color: #ffe6e6;
 }
 
-.test {
-    width: 100%;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
-    position: relative;
+.character-box {
+    border: 3px solid;
+    border-color: inherit;
 }
 
-.test2 {
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+.selected-ability {
+    color: goldenrod;
 }

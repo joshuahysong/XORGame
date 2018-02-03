@@ -1,4 +1,5 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
+@using XORGame.Data.Entities
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,16 +8,18 @@
 
 @section scripts {
     @Scripts.Render("~/Areas/Arena/Scripts/ArenaHelper.js")
-    <script type="text/javascript">
+<script type="text/javascript">
         function setup() {
             arenaHelper.init({
                 performActionURL: '@Url.Action("PerformAction", "Home")',
                 friendlyTeamID: '@Model.FriendlyTeamID',
-                enemyTeamID: '@Model.EnemyTeamID'
+                enemyTeamID: '@Model.EnemyTeamID',
+                boardX: @Constants.BoardX,
+                boardY: @Constants.BoardY
             });
         }
         jQuery(document).ready(setup);
-    </script>
+</script>
 }
 
 <div id="board" class="mb-3">
