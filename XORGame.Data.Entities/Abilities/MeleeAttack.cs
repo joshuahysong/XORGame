@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,24 +18,26 @@ namespace XORGame.Data.Entities.Abilities
             BaseDamage = 10;
         }
 
-        public bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter)
+        public bool IsValidTarget(BattleData battleData, Boardspace targetSpace)
         {
-            // TODO Change to account for characters blocking melee targets
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
+            Boardspace selectedCharacterSpace = battleData.Boardspaces.FirstOrDefault(bs => bs.Character?.ID == selectedCharacter.ID);
             return (selectedCharacter != null &&
-                targetedCharacter != null &&
-                selectedCharacter.ID != targetedCharacter.ID &&
-                selectedCharacter.TeamID != targetedCharacter.TeamID &&
-                targetedCharacter.IsAlive() &&
-                !IsOnCooldown());
+                selectedCharacterSpace != null &&
+                targetSpace.Character != null &&
+                selectedCharacter.ID != targetSpace.Character.ID &&
+                selectedCharacter.TeamID != targetSpace.Character.TeamID &&
+                !IsOnCooldown() &&
+                selectedCharacterSpace.Neighbors().Contains((Point?)targetSpace.Coordinates));
         }
 
-        public void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetedCharacter)
+        public void AdjustCharacterStats(BattleData battleData, Boardspace targetSpace)
         {
             CharacterBattleData selectedCharacter = battleData.Characters.Where(c => c.IsSelected).FirstOrDefault();
-            int damage = GetDamageModifier(selectedCharacter.Attack, targetedCharacter.Defense) + BaseDamage;
-            int newHealth = targetedCharacter.CurrentHealth - (damage < 0 ? 0 : damage);
-            targetedCharacter.CurrentHealth = newHealth < 0 ? 0 : newHealth;
+            int damage = GetDamageModifier(selectedCharacter.Attack, targetSpace.Character.Defense) + BaseDamage;
+            int newHealth = targetSpace.Character.CurrentHealth - (damage < 0 ? 0 : damage);
+            targetSpace.Character.CurrentHealth = newHealth < 0 ? 0 : newHealth;
+            CheckCharacterDeathAtSpace(battleData, targetSpace);
         }
     }
 }

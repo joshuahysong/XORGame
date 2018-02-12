@@ -18,6 +18,7 @@ namespace XORGame.Data.Maps
             Property(x => x.Defense).HasColumnName("Defense");
             Property(x => x.Speed).HasColumnName("Speed");
             Property(x => x.Description).HasColumnName("Description");
+            Property(x => x.SpritesPath).HasColumnName("SpritesPath");
         }
     }
 }

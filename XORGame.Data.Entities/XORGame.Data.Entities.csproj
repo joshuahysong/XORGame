@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,12 +46,15 @@
   <ItemGroup>
     <Compile Include="Abilities\BasicHeal.cs" />
     <Compile Include="Abilities\MeleeAttack.cs" />
+    <Compile Include="Abilities\Move.cs" />
     <Compile Include="Abilities\RangedAttack.cs" />
     <Compile Include="Ability.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Contracts\IAbilityAction.cs" />
     <Compile Include="Contracts\AbilityActionBase.cs" />
     <Compile Include="DataTransferEntities\BattleData.cs" />
+    <Compile Include="DataTransferEntities\Boardspace.cs" />
     <Compile Include="DataTransferEntities\CharacterBattleData.cs" />
     <Compile Include="Contracts\IAttack.cs" />
     <Compile Include="Player.cs" />
@@ -60,5 +64,6 @@
     <Compile Include="Team.cs" />
     <Compile Include="TeamRoster.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

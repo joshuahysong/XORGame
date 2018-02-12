@@ -1,4 +1,5 @@
 ﻿@model XORGame.Data.DataTransferEntities.BattleData
+@using XORGame.Data.Entities
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,28 +8,28 @@
 
 @section scripts {
     @Scripts.Render("~/Areas/Arena/Scripts/ArenaHelper.js")
-    <script type="text/javascript">
+<script type="text/javascript">
         function setup() {
             arenaHelper.init({
                 performActionURL: '@Url.Action("PerformAction", "Home")',
                 friendlyTeamID: '@Model.FriendlyTeamID',
-                enemyTeamID: '@Model.EnemyTeamID'
+                enemyTeamID: '@Model.EnemyTeamID',
+                boardX: @Constants.BoardX,
+                boardY: @Constants.BoardY,
             });
         }
         jQuery(document).ready(setup);
-    </script>
+</script>
 }
 
-<div class="panel panel-default">
-    <div id="board" class="panel-body">
-        @Html.Partial("_Board")
-    </div>
+<div id="board" class="mb-3">
+    @Html.Partial("_Board")
 </div>
-<div class="panel panel-default">
-    <div id="devtools" class="panel-heading">
+<div class="card">
+    <div id="devtools" class="card-header">
         Dev Tools
     </div>
-    <div class="panel-body">
-        @Html.ActionLink("Reset Battle", "ResetBattle", "Home", null, new { @class = "btn btn-default" })
+    <div class="card-body">
+        @Html.ActionLink("Reset Battle", "ResetBattle", "Home", null, new { @class = "card-link" })
     </div>
 </div>

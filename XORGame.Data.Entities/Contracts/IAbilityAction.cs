@@ -1,4 +1,6 @@
-﻿using XORGame.Data.DataTransferEntities;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using XORGame.Data.DataTransferEntities;
 
 namespace XORGame.Data.Entities.Contracts
 {
@@ -18,12 +20,14 @@ namespace XORGame.Data.Entities.Contracts
 
         int CurrentCooldown { get; set; }
 
+        List<Point> ValidTargets { get; set; }
+
         bool IsOnCooldown();
 
         void StartCooldown();
 
-        bool IsValidTarget(BattleData battleData, CharacterBattleData targetedCharacter);
+        bool IsValidTarget(BattleData battleData, Boardspace targetSpace);
 
-        void AdjustCharacterStats(BattleData battleData, CharacterBattleData targetCharacter);
+        void AdjustCharacterStats(BattleData battleData, Boardspace targetSpace);
     }
 }

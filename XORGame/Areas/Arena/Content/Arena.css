@@ -1,98 +1,42 @@
-﻿.character-box {
-    height: 120px;
-    width: 120px;
-    margin: 4px;
+﻿.board-space {
+    border-style: dotted;
 }
 
-    .character-box label {
-        height: 60px;
-    }
-
-.progress {
-    position: relative;
+.col-board-space {
+    max-width: 130px;
 }
 
-    .progress span {
-        position: absolute;
-        display: block;
-        width: 100%;
-        color: black;
-    }
-
-.team-separator {
-    height: 130px;
-}
-
-.flex-align-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.vertial-align-bottom {
-    display: flex;
-    align-items: flex-end;
-}
-
-.equal {
-    display: flex;
-}
-
-.character-box:hover {
-    background-color: #F7F9F9;
-}
-
-.selected-character {
-    outline: gold auto 5px;
-    background-color: cornsilk;
-}
-
-.targeted-character {
-    outline: red auto 5px;
+.row-board-space {
+    max-height: 130px;
 }
 
 .hp-bar {
+    height: 8px;
     margin-bottom: 2px;
 }
 
 .speed-bar {
-    height: 5px;
+    height: 3px;
 }
 
-.combat-log-entry {
-    color: red;
+.selected-character {
+    background-color: #ffff50;
 }
 
-.board-space {
-    height: 130px;
-    width: 130px;
-    min-height: 130px;
-    min-width: 130px;
-    margin: 0;
-    padding: 0;
-    border: 1px dotted lightgray;
+.targeted-space {
+    border: blue dotted 1px;
+    background-color: lightcyan;
 }
 
-.ability-panel {
-    height: 650px;
+.enemy-character {
+    background-color: #ffe6e6;
 }
 
-.dead-character {
-    color: lightgray
+.character-box {
+    border: 3px solid;
+    border-color: inherit;
 }
 
-.ability-row {
-    margin-bottom: 15px;
-}
-
-.ability-column {
-    padding-right: 0;
-}
-
-.ability-column-info {
-    padding-left: 5px;
-}
-
-.btn-group-justified > .btn-ability-cooldown {
-    width: .25%;
+.selected-ability {
+    color: goldenrod;
 }

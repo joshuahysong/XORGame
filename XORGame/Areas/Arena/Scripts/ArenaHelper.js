@@ -2,40 +2,63 @@
 
     var arenaHelperLib = function () {
         var self = this;
-        var targetedCharactterID = 0;
+        var selectedAbilityID = null;
+        var validTargets = [];
 
         self.init = init;
         self.performActionURL = null;
         self.friendlyTeamID = null;
         self.enemyTeamID = null;
+        self.boardX = 0;
+        self.boardY = 0;
 
         function init(settings) {
             self.performActionURL = settings.performActionURL;
             self.friendlyTeamID = settings.friendlyTeamID;
             self.enemyTeamID = settings.enemyTeamID;
+            self.boardX = settings.boardX;
+            self.boardY = settings.boardY;
             bindEvents();
         }
 
         function bindEvents() {
-            $('.character-box').on('click', selection);
-            $('.btn-ability').on('click', performAction);
+            validTargets = [];
+            selectedAbilityID = null;
+            $('.board-space').on('click', performAction);
+            $('.btn-ability').on('click', abilitySelection);
         }
 
-        function selection() {
-            $('.character-box').removeClass("targeted-character");
-            $(this).addClass("targeted-character");
-            targetedCharactterID = $(this).data("characterid");        }
+        function abilitySelection() {
+            if (!$(this).prop("disabled")) {
+                $('.board-space').removeClass("targeted-space");
+                validTargets = $(this).data("validtargets");
+                if (validTargets.length > 0) {
+                    selectedAbilityID = $(this).data("abilityid");
+                    $('[id^=select-arrow-]').addClass('text-hide');
+                    $('#select-arrow-' + selectedAbilityID).removeClass('text-hide');
+                    for (var y = 0; y < self.boardY; y++) {
+                        for (var x = 0; x < self.boardX; x++) {
+                            var boardSpace = $('#space-' + x + '-' + y);
+                            if (boardSpace && validTargets.indexOf(x + ', ' + y) > -1) {
+                                boardSpace.addClass('targeted-space');
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         function performAction() {
-            if (!$(this).children(':first').prop("disabled")) {
-                var abilityID = $(this).data("abilityid");
-                if (abilityID) {
+            targetedSpaceID = $(this).attr("id");
+            var targetCoords = targetedSpaceID.split('-');
+            if (targetCoords.length === 3 && validTargets.indexOf(targetCoords[1] + ', ' + targetCoords[2]) > -1) {
+                if (selectedAbilityID) {
                     $.post(self.performActionURL,
                         {
                             friendlyTeamID: self.friendlyTeamID,
                             enemyTeamID: self.enemyTeamID,
-                            targetCharacterID: targetedCharactterID,
-                            abilityID: abilityID
+                            abilityID: selectedAbilityID,
+                            targetedSpaceID: targetedSpaceID
                         },
                         function (result) {
                             $('#board').html(result);

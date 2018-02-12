@@ -1,0 +1,14 @@
+﻿@model XORGame.Data.DataTransferEntities.CharacterBattleData
+
+<div class="col-md-12 col-2 pl-lg-3 pr-lg-3 pl-md-2 pr-md-2 pl-1 pr-0">
+    <div class="card text-center border-0 mb-1">
+        <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
+        <div class="card-img-overlay p-0">
+            <div class="card character-box h-100 bg-light @(Model.IsEnemy ? "border-danger" : "border-info")">
+                <div class="card-body p-0">
+                    <img class="card-img p-1" src="@string.Format("{0}/S.png", Model.SpritesPath)" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

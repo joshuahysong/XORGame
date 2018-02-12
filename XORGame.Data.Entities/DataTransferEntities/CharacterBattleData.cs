@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using XORGame.Data.Entities;
+using System.Drawing;
 using XORGame.Data.Entities.Contracts;
 
 namespace XORGame.Data.DataTransferEntities
@@ -25,6 +25,10 @@ namespace XORGame.Data.DataTransferEntities
 
         public int Location { get; set; }
 
+        public string SpritesPath { get; set; }
+
+        public string Facing { get; set; }
+
         public int TurnMeter { get; set; }
 
         public bool IsEnemy { get; set; }
@@ -37,7 +41,7 @@ namespace XORGame.Data.DataTransferEntities
         {
             get
             {
-                return (Convert.ToDecimal(CurrentHealth) / Convert.ToDecimal(TotalHealth)) * 100;
+                return TotalHealth > 0 ? (Convert.ToDecimal(CurrentHealth) / Convert.ToDecimal(TotalHealth)) * 100 : 1;
             }
         }
 
@@ -49,9 +53,62 @@ namespace XORGame.Data.DataTransferEntities
             }
         }
 
-        public bool IsAlive()
+        public Point? GetStartingCoordinates()
         {
-            return CurrentHealth > 0;
+            if (IsEnemy)
+            {
+                switch (Location)
+                {
+                    case 0:
+                        return new Point(4, 1);
+                    case 1:
+                        return new Point(3, 1);
+                    case 2:
+                        return new Point(2, 1);
+                    case 3:
+                        return new Point(1, 1);
+                    case 4:
+                        return new Point(0, 1);
+                    case 5:
+                        return new Point(4, 0);
+                    case 6:
+                        return new Point(3, 0);
+                    case 7:
+                        return new Point(2, 0);
+                    case 8:
+                        return new Point(1, 0);
+                    case 9:
+                        return new Point(0, 0);
+                }
+            }
+            else
+            {
+                switch (Location)
+                {
+                    case 0:
+                        return new Point(0, 3);
+                    case 1:
+                        return new Point(1, 3);
+                    case 2:
+                        return new Point(2, 3);
+                    case 3:
+                        return new Point(3, 3);
+                    case 4:
+                        return new Point(4, 3);
+                    case 5:
+                        return new Point(0, 4);
+                    case 6:
+                        return new Point(1, 4);
+                    case 7:
+                        return new Point(2, 4);
+                    case 8:
+                        return new Point(3, 4);
+                    case 9:
+                        return new Point(4, 4);
+                }
+            }
+
+            return null;
         }
     }
 }
