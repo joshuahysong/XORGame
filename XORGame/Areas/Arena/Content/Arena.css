@@ -1,11 +1,13 @@
 ﻿.board-space {
     border-style: dotted;
-    max-height: 130px;
+}
+
+.col-board-space {
     max-width: 130px;
 }
 
-.team-separator {
-    height: 130px;
+.row-board-space {
+    max-height: 130px;
 }
 
 .hp-bar {

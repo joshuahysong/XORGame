@@ -6,25 +6,39 @@
 }
 
 <div class ="row align-items-stretch">
-    <div class="col-12 col-md-8">
-        <div class="row">
-            <div class="col-sm-1 col-12">@*TODO Dead friendlies here*@</div>
-            <div class="col-sm-10 col-12">
-                @for (var y = 0; y < Constants.BoardY; y++)
-                {
-                    <div class="row no-gutters" style="max-height: 130px;">
-                        @for (var x = 0; x < Constants.BoardY; x++)
-                        {
-                            @Html.Partial("_Boardspace", Model.Boardspaces
-                                .FirstOrDefault(bs => bs.IsEqualCoordinates(new System.Drawing.Point(x, y))));
-                        }
-                    </div>
-                }
+    <div class="col-12 col-md-1 order-md-1 order-2">
+        <div class="row mt-2 mt-md-0">
+            <div class="col-6 col-md-12">
+                <div class="row justify-content-end">
+                    @foreach (var deadCharacter in Model.DeadCharacters.Where(x => !x.IsEnemy))
+                    {
+                        @Html.Partial("_DeadCharacter", deadCharacter);
+                    }
+                </div>
             </div>
-            <div class="col-sm-1 col-12">@*TODO Dead enemies here*@</div>
+            <div class="col-6 col-md-12">
+                <div class="row">
+                    @foreach (var deadCharacter in Model.DeadCharacters.Where(x => x.IsEnemy))
+                    {
+                        @Html.Partial("_DeadCharacter", deadCharacter);
+                    }
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-7 order-md-2 order-1">
+        @for (var y = 0; y < Constants.BoardY; y++)
+        {
+            <div class="row no-gutters" style="max-height: 130px;">
+                @for (var x = 0; x < Constants.BoardY; x++)
+                {
+                    @Html.Partial("_Boardspace", Model.Boardspaces
+                        .FirstOrDefault(bs => bs.IsEqualCoordinates(new System.Drawing.Point(x, y))));
+                }
+            </div>
+        }
+    </div>
+    <div class="col-12 col-md-4 order-md-3 order-3">
         <div class="card ability-panel h-100 mt-2 mt-md-0">
             <div class="card-body">
                 <h4 class="card-title">@selectedCharacter.Name</h4>

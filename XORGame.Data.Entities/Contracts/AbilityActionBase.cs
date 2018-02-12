@@ -51,5 +51,14 @@ namespace XORGame.Data.Entities.Contracts
         {
             return ((attack - defense) / 10) + 1;
         }
+
+        public void CheckCharacterDeathAtSpace(BattleData battleData, Boardspace targetSpace)
+        {
+            if (targetSpace.Character.CurrentHealth <= 0)
+            {
+                battleData.DeadCharacters.Add(targetSpace.Character);
+                targetSpace.Character = null;
+            }
+        }
     }
 }

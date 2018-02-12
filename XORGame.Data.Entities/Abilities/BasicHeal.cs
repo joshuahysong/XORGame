@@ -15,7 +15,6 @@ namespace XORGame.Data.Entities.Abilities
             return (selectedCharacter != null &&
                 targetSpace.Character != null &&
                 selectedCharacter.TeamID == targetSpace.Character.TeamID &&
-                targetSpace.Character.IsAlive() && 
                 !IsOnCooldown());
         }
 

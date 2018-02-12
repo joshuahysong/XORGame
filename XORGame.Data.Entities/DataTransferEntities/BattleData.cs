@@ -15,8 +15,15 @@ namespace XORGame.Data.DataTransferEntities
             }
         }
 
+        public List<CharacterBattleData> DeadCharacters { get; set; }
+
         public int FriendlyTeamID { get; set; }
 
         public int EnemyTeamID { get; set; }
+
+        public BattleData()
+        {
+            DeadCharacters = new List<CharacterBattleData>();
+        }
     }
 }
