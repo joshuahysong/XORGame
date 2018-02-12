@@ -20,7 +20,6 @@ namespace XORGame.Data.Entities.Abilities
                 targetSpace.Character != null &&
                 selectedCharacter.ID != targetSpace.Character.ID &&
                 selectedCharacter.TeamID != targetSpace.Character.TeamID &&
-                targetSpace.Character.IsAlive() &&
                 !IsOnCooldown());
         }
 
@@ -30,10 +29,7 @@ namespace XORGame.Data.Entities.Abilities
             int damage = GetDamageModifier(selectedCharacter.Attack, targetSpace.Character.Defense) + BaseDamage;
             int newHealth = targetSpace.Character.CurrentHealth - (damage < 0 ? 0 : damage);
             targetSpace.Character.CurrentHealth = newHealth < 0 ? 0 : newHealth;
-            if (targetSpace.Character.CurrentHealth <= 0)
-            {
-                targetSpace.Character = null;
-            }
+            CheckCharacterDeathAtSpace(battleData, targetSpace);
         }
     }
 }

@@ -53,11 +53,6 @@ namespace XORGame.Data.DataTransferEntities
             }
         }
 
-        public bool IsAlive()
-        {
-            return CurrentHealth > 0;
-        }
-
         public Point? GetStartingCoordinates()
         {
             if (IsEnemy)

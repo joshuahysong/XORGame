@@ -1,6 +1,6 @@
 ﻿@model XORGame.Data.DataTransferEntities.Boardspace
 
-<div class="col">
+<div class="col col-board-space">
     <div id="space-@string.Format("{0}-{1}", Model.Coordinates.X, Model.Coordinates.Y)" 
          class="card text-center rounded-0 board-space">
         <img class="card-img" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAQAAAAgCth2AAAArElEQVR42u3QIQEAAAACIP1/2hkWmEBDqkCCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEhQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEGCBAkSJEiQIEHC2wBv1wCD+McX/gAAAABJRU5ErkJggg==" />
@@ -17,31 +17,24 @@
                         <img class="card-img pl-2 pr-2 pt-3 pl-lg-3 pr-lg-3 pt-lg-4 pb-0" 
                              src="@string.Format("{0}/{1}.png", Model.Character.SpritesPath, Model.Character.Facing)" />
                         <div class="card-img-overlay m-lg-2 m-1 p-0">
-                            @if (Model.Character.IsAlive())
-                            {
-                                <div class="hp-bar progress">
-                                    <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "bg-danger" : "bg-warning" : "bg-success")"
-                                         style="width: @(healthPercentage.ToString())%;"
-                                         role="progressbar"
-                                         aria-valuenow=@healthPercentage
-                                         aria-valuemin="0"
-                                         aria-valuemax="100">
-                                    </div>
+                            <div class="hp-bar progress">
+                                <div class="progress-bar @(healthPercentage < 90 ? healthPercentage < 30 ? "bg-danger" : "bg-warning" : "bg-success")"
+                                        style="width: @(healthPercentage.ToString())%;"
+                                        role="progressbar"
+                                        aria-valuenow=@healthPercentage
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
                                 </div>
-                                <div class="speed-bar progress text-center">
-                                    <div class="progress-bar bg-info"
-                                         style="width: @(turnMeterPercentage.ToString())%;"
-                                         role="progressbar"
-                                         aria-valuenow=@turnMeterPercentage
-                                         aria-valuemin="0"
-                                         aria-valuemax="100">
-                                    </div>
+                            </div>
+                            <div class="speed-bar progress text-center">
+                                <div class="progress-bar bg-info"
+                                        style="width: @(turnMeterPercentage.ToString())%;"
+                                        role="progressbar"
+                                        aria-valuenow=@turnMeterPercentage
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
                                 </div>
-                            }
-                            else
-                            {
-                                <span>DEAD</span>
-                            }
+                            </div>
                         </div>
                     </div>
                 </div>
